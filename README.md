@@ -9,6 +9,7 @@
 -   :heavy_check_mark: **Prettier**
 -   :heavy_check_mark: **SASS**
 -   :heavy_check_mark: **Material-ui (v5)**
+-   :heavy_check_mark: **Storybook**
 
 ## Como posso pegar uma atividade disponível para contribuir?
 
@@ -23,8 +24,14 @@
 
 ### Windows
 
-    - Yarn -> `yarn dev`
-    - NPM -> `npm run dev`
+-   **Aplicação Next**
+
+    -   Yarn -> `yarn dev`
+    -   NPM -> `npm run dev`
+
+-   **Storybook**
+    -   Yarn -> `yarn storybook`
+    -   NPM -> `npm run storybook`
 
 ### Container com docker (Linux)
 

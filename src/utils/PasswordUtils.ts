@@ -3,7 +3,7 @@ class PasswordUtils {
 	 *
 	 *  Retorna true se a senha estiver válida! */
 	static PasswordIsValid(password: string): boolean {
-		return Boolean(password.length > 6 || password.length < 32);
+		return Boolean(password.length > 6 && password.length < 32);
 	}
 }
 

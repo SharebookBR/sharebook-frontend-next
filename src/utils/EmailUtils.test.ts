@@ -1,5 +1,4 @@
-import Utils from './index';
-// import Utils from '@sharebook-utils';
+import Utils from '@sharebook-utils';
 
 describe('Testing EmailUtils', () => {
 	it('Email valid', () => {

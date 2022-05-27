@@ -1,4 +1,5 @@
 {
+	//To include new paths, include also into jest.config.js
 	"compilerOptions": {
 		"baseUrl": "src",
 		"paths": {

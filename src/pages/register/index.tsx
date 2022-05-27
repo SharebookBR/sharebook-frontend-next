@@ -30,13 +30,28 @@ const Register: NextPage = () => {
 				});
 			} else if (value.length > 0) {
 				setErrors((currentErrors) => {
-					// TODO: não colocar fixo hasErrors: false pois pode existir outros erros no formulário.
+					// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
 					return { ...currentErrors, hasErrors: false, [name]: '' };
 				});
 			}
 		},
 		[setErrors]
 	);
+
+	const validateEmail = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+		// TODO: Validar Telefone também caso o campo de fato deve permitir ambos (pendente de validação com UX)
+		const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
+		if (!Utils.EmailIsValid(value)) {
+			setErrors((currentErrors) => {
+				return { ...currentErrors, hasErrors: true, [name]: 'Email inválido!' };
+			});
+		} else if (value.length > 0) {
+			setErrors((currentErrors) => {
+				// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
+				return { ...currentErrors, hasErrors: false, [name]: '' };
+			});
+		}
+	}, []);
 
 	return (
 		<Grid container className={styles.container}>
@@ -70,6 +85,9 @@ const Register: NextPage = () => {
 							placeholder="E-mail ou número de celular"
 							required
 							onChange={onChange}
+							onBlur={(e) => validateEmail(e as React.ChangeEvent<HTMLInputElement>)}
+							error={Boolean(errors.emailOrPhone)}
+							helperText={errors.emailOrPhone}
 						/>
 						<TextField
 							className={styles.input}

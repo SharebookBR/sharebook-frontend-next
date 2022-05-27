@@ -1,0 +1,10 @@
+FROM node:14 as dev
+
+RUN mkdir /appdev
+WORKDIR /appdev
+COPY package*.json ./
+COPY yarn.lock ./
+COPY next.config.js ./
+
+RUN yarn install --frozen-lockfile
+CMD ["yarn", "dev"]

@@ -14,6 +14,8 @@
 -   Utilizamos o [Board/Projeto](https://github.com/SharebookBR/sharebook-frontend-next/projects/1) do próprio Github, utilizando issues (baseado no
     Kanban básico)
 
+-   [Veja nossas regras para PR/MR](https://github.com/SharebookBR/sharebook-frontend-next/wiki/Regras-para-novas-contribui%C3%A7%C3%B5es)
+
 # Como executar a aplicação?
 
 -   Antes de tudo, precisamos criar o arquivo `.env.development`! Pra isso você pode utilizar como base o `.env.example`.

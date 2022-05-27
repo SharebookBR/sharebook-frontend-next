@@ -4,6 +4,7 @@
 
 -   :heavy_check_mark: **NextJs**
 -   :heavy_check_mark: **TypeScript**
+-   :heavy_check_mark: **Jest**
 -   :heavy_check_mark: **ESLint**
 -   :heavy_check_mark: **Prettier**
 -   :heavy_check_mark: **SASS**

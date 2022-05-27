@@ -5,7 +5,7 @@ import Image from 'next/image';
 import axiosClient from '@sharebook-axios';
 import Utils from '@sharebook-utils';
 
-import styles from '../styles/pages/login.module.scss';
+import styles from './styles.module.scss';
 import { useAuthContext } from '@sharebook-hooks';
 import Link from 'next/link';
 

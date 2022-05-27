@@ -6,4 +6,9 @@ describe('Testing EmailUtils', () => {
 		const result = Utils.EmailIsValid(emailValid);
 		expect(result).toBeTruthy();
 	});
+	it('Email invalid', () => {
+		const emailInvalid = 'henrique_holtzhotmail.com';
+		const result = Utils.EmailIsValid(emailInvalid);
+		expect(result).not.toBeTruthy();
+	});
 });

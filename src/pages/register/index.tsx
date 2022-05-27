@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import type { NextPage } from 'next';
 import { Button, Grid, TextField, Typography } from '@mui/material';
 
-import styles from '../styles/pages/register.module.scss';
+import styles from './styles.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
 

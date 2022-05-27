@@ -5,7 +5,7 @@ import Image from 'next/image';
 import axiosClient from '@sharebook-axios';
 import Utils from '@sharebook-utils';
 
-import styles from '../styles/pages/login.module.scss';
+import styles from './styles.module.scss';
 import { useAuthContext } from '@sharebook-hooks';
 import Link from 'next/link';
 
@@ -25,12 +25,12 @@ const Login: NextPage = () => {
 	if (authContext.authenticated) window.location.href = window.location.origin; //go to home
 
 	const validateEmail = useCallback(() => {
-		if (email.length > 0 && !Utils.ValidateEmail(email)) setEmailError('Email inválido');
+		if (email.length > 0 && !Utils.EmailIsValid(email)) setEmailError('Email inválido');
 		else setEmailError('');
 	}, [email]);
 
 	const validatePassword = useCallback(() => {
-		if (password.length > 0 && Utils.ValidatePassword(password))
+		if (password.length > 0 && Utils.PasswordIsValid(password))
 			setPasswordError('Senha inválida! Sua senha deve conter entre 6 e 32 caracteres.');
 		else setPasswordError('');
 	}, [password]);

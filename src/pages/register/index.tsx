@@ -2,52 +2,55 @@ import React, { useState, useCallback } from 'react';
 import type { NextPage } from 'next';
 import { Button, Grid, TextField, Typography } from '@mui/material';
 
-import styles from '../styles/pages/register.module.scss';
+import styles from './styles.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
-
-interface IValues {
-	name: string;
-	emailOrPhone: string;
-	address: string;
-	complement?: string;
-	city: string;
-	password: string;
-	confirmPassword: string;
-	birthDate?: Date;
-	zipCode: string;
-	number: string;
-	neighborhood: string;
-	state: string;
-	acceptReceiveEmails: boolean;
-	acceptTerms: boolean;
-}
-
-const initialValues: IValues = {
-	name: '',
-	emailOrPhone: '',
-	address: '',
-	complement: '',
-	city: '',
-	password: '',
-	confirmPassword: '',
-	zipCode: '',
-	number: '',
-	neighborhood: '',
-	state: '',
-	acceptReceiveEmails: true,
-	acceptTerms: false
-};
+import { IValues, IErrors } from './types';
+import { initialValues, initialErrors } from './defaultValues';
+import Utils from '@sharebook-utils';
 
 const Register: NextPage = () => {
 	const [values, setValues] = useState<IValues>(initialValues);
+	const [errors, setErrors] = useState<IErrors>(initialErrors);
 
 	const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
+		const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
 		if (name && value)
 			setValues((currentValues) => {
 				return { ...currentValues, [name]: value };
 			});
+	}, []);
+
+	const validatePassword = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
+			if (!Utils.PasswordIsValid(value)) {
+				setErrors((currentErrors) => {
+					return { ...currentErrors, hasErrors: true, [name]: 'Senha inválida!' };
+				});
+			} else if (value.length > 0) {
+				setErrors((currentErrors) => {
+					// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
+					return { ...currentErrors, hasErrors: false, [name]: '' };
+				});
+			}
+		},
+		[setErrors]
+	);
+
+	const validateEmail = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+		// TODO: Validar Telefone também caso o campo de fato deve permitir ambos (pendente de validação com UX)
+		const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
+		if (!Utils.EmailIsValid(value)) {
+			setErrors((currentErrors) => {
+				return { ...currentErrors, hasErrors: true, [name]: 'Email inválido!' };
+			});
+		} else if (value.length > 0) {
+			setErrors((currentErrors) => {
+				// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
+				return { ...currentErrors, hasErrors: false, [name]: '' };
+			});
+		}
 	}, []);
 
 	return (
@@ -82,6 +85,9 @@ const Register: NextPage = () => {
 							placeholder="E-mail ou número de celular"
 							required
 							onChange={onChange}
+							onBlur={(e) => validateEmail(e as React.ChangeEvent<HTMLInputElement>)}
+							error={Boolean(errors.emailOrPhone)}
+							helperText={errors.emailOrPhone}
 						/>
 						<TextField
 							className={styles.input}
@@ -121,6 +127,9 @@ const Register: NextPage = () => {
 							type="password"
 							placeholder="********"
 							required
+							helperText={errors.password}
+							error={Boolean(errors.password)}
+							onBlur={(e) => validatePassword(e as React.ChangeEvent<HTMLInputElement>)}
 							onChange={onChange}
 						/>
 						<TextField
@@ -132,6 +141,9 @@ const Register: NextPage = () => {
 							type="password"
 							placeholder="********"
 							required
+							helperText={errors.confirmPassword}
+							error={Boolean(errors.confirmPassword)}
+							onBlur={(e) => validatePassword(e as React.ChangeEvent<HTMLInputElement>)}
 							onChange={onChange}
 						/>
 					</Grid>
@@ -180,6 +192,7 @@ const Register: NextPage = () => {
 						<Button
 							className={styles.registerButton}
 							fullWidth
+							disabled={errors.hasErrors}
 							variant="contained"
 							onClick={() => console.log('Cadastrar: ', JSON.stringify(values))}
 						>

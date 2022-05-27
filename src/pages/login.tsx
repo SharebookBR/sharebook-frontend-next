@@ -30,7 +30,7 @@ const Login: NextPage = () => {
 	}, [email]);
 
 	const validatePassword = useCallback(() => {
-		if (password.length > 0 && (password.length < 6 || password.length > 32))
+		if (password.length > 0 && Utils.ValidatePassword(password))
 			setPasswordError('Senha inválida! Sua senha deve conter entre 6 e 32 caracteres.');
 		else setPasswordError('');
 	}, [password]);

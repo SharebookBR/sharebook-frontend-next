@@ -21,6 +21,23 @@ const Register: NextPage = () => {
 			});
 	}, []);
 
+	const validatePassword = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
+			if (!Utils.PasswordIsValid(value)) {
+				setErrors((currentErrors) => {
+					return { ...currentErrors, hasErrors: true, [name]: 'Senha inválida!' };
+				});
+			} else if (value.length > 0) {
+				setErrors((currentErrors) => {
+					// TODO: não colocar fixo hasErrors: false pois pode existir outros erros no formulário.
+					return { ...currentErrors, hasErrors: false, [name]: '' };
+				});
+			}
+		},
+		[setErrors]
+	);
+
 	return (
 		<Grid container className={styles.container}>
 			<Grid item xs={2}>
@@ -92,7 +109,9 @@ const Register: NextPage = () => {
 							type="password"
 							placeholder="********"
 							required
-							onBlur={validatePassword}
+							helperText={errors.password}
+							error={Boolean(errors.password)}
+							onBlur={(e) => validatePassword(e as React.ChangeEvent<HTMLInputElement>)}
 							onChange={onChange}
 						/>
 						<TextField
@@ -104,6 +123,9 @@ const Register: NextPage = () => {
 							type="password"
 							placeholder="********"
 							required
+							helperText={errors.confirmPassword}
+							error={Boolean(errors.confirmPassword)}
+							onBlur={(e) => validatePassword(e as React.ChangeEvent<HTMLInputElement>)}
 							onChange={onChange}
 						/>
 					</Grid>

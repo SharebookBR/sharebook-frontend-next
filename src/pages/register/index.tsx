@@ -5,45 +5,16 @@ import { Button, Grid, TextField, Typography } from '@mui/material';
 import styles from './styles.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
-
-interface IValues {
-	name: string;
-	emailOrPhone: string;
-	address: string;
-	complement?: string;
-	city: string;
-	password: string;
-	confirmPassword: string;
-	birthDate?: Date;
-	zipCode: string;
-	number: string;
-	neighborhood: string;
-	state: string;
-	acceptReceiveEmails: boolean;
-	acceptTerms: boolean;
-}
-
-const initialValues: IValues = {
-	name: '',
-	emailOrPhone: '',
-	address: '',
-	complement: '',
-	city: '',
-	password: '',
-	confirmPassword: '',
-	zipCode: '',
-	number: '',
-	neighborhood: '',
-	state: '',
-	acceptReceiveEmails: true,
-	acceptTerms: false
-};
+import { IValues, IErrors } from './types';
+import { initialValues, initialErrors } from './defaultValues';
+import Utils from '@sharebook-utils';
 
 const Register: NextPage = () => {
 	const [values, setValues] = useState<IValues>(initialValues);
+	const [errors, setErrors] = useState<IErrors>(initialErrors);
 
 	const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
+		const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
 		if (name && value)
 			setValues((currentValues) => {
 				return { ...currentValues, [name]: value };
@@ -121,6 +92,7 @@ const Register: NextPage = () => {
 							type="password"
 							placeholder="********"
 							required
+							onBlur={validatePassword}
 							onChange={onChange}
 						/>
 						<TextField
@@ -180,6 +152,7 @@ const Register: NextPage = () => {
 						<Button
 							className={styles.registerButton}
 							fullWidth
+							disabled={errors.hasErrors}
 							variant="contained"
 							onClick={() => console.log('Cadastrar: ', JSON.stringify(values))}
 						>

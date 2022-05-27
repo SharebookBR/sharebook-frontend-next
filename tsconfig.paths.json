@@ -1,0 +1,14 @@
+{
+	"compilerOptions": {
+		"baseUrl": "src",
+		"paths": {
+			"@sharebook-themes": ["themes"],
+			"@sharebook-layouts": ["layouts"],
+			"@sharebook-components": ["components"],
+			"@sharebook-hooks": ["hooks"],
+			"@sharebook-configs": ["configs"],
+			"@sharebook-axios": ["axios"],
+			"@sharebook-utils": ["utils"]
+		}
+	}
+}

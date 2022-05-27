@@ -1,0 +1,44 @@
+.container {
+	padding: 5rem 11vw;
+	display: flex;
+
+	.right {
+		padding-left: 13.1vw;
+
+		.title {
+			font-size: 1.73rem;
+			font-weight: 700;
+			line-height: 2.62rem;
+			color: #4f4f4f;
+		}
+
+		.containerForm {
+			display: flex;
+			justify-content: space-between;
+
+			.input,
+			.login,
+			.registerButton {
+				margin-top: 24px;
+			}
+
+			.leftForm {
+				max-width: 358px;
+			}
+
+			.rightForm {
+				max-width: 358px;
+
+				.login {
+					width: 100%;
+					text-align: center;
+					font-size: 0.93rem;
+
+					a {
+						padding-left: 4px;
+					}
+				}
+			}
+		}
+	}
+}

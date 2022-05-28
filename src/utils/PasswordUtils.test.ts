@@ -2,9 +2,11 @@ import Utils from '@sharebook-utils';
 
 describe('Testing PasswordUtils', () => {
 	it('Password valid', () => {
-		const passwordValid = '123456789';
-		const result = Utils.PasswordIsValid(passwordValid);
-		expect(result).toBeTruthy();
+		const validPasswords = ['123456', 'henrique', '01234567890123456789012345678912'];
+		validPasswords.forEach((item) => {
+			const result = Utils.PasswordIsValid(item);
+			expect(result).toBeTruthy();
+		});
 	});
 	it('Password invalid', () => {
 		const invalidPassowrds = ['', '1234', 'asdbkasdhajksdhasjkdhasdjkhasjdaksdjsa'];

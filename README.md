@@ -20,26 +20,16 @@
 
 # Como executar a aplicação?
 
--   Antes de tudo, precisamos criar o arquivo `.env.development`! Pra isso você pode utilizar como base o `.env.example`.
-
-### Windows
-
--   **Aplicação Next**
-
-    -   Yarn -> `yarn dev`
-    -   NPM -> `npm run dev`
-
--   **Storybook**
-    -   Yarn -> `yarn storybook`
-    -   NPM -> `npm run storybook`
-
-### Container com docker (Linux)
-
-    - Yarn -> `yarn dev-docker`
-    - NPM -> `npm run dev-docker`
+### [Veja nosso Wiki completo aqui](https://github.com/SharebookBR/sharebook-frontend-next/wiki/Como-executar-a-aplica%C3%A7%C3%A3o%3F) separado por ambientes (Ex: [Windows](https://github.com/SharebookBR/sharebook-frontend-next/wiki/Como-executar-a-aplica%C3%A7%C3%A3o%3F#windows), ou [Windows + Docker + WSL2 (Linux)](https://github.com/SharebookBR/sharebook-frontend-next/wiki/Como-executar-a-aplica%C3%A7%C3%A3o%3F#windows) e outros)
 
 ## Sugestões de extensões uteis para o projeto
 
 -   ESLint
 -   Prettier
 -   Sass
+
+# Não encontrou oque procura?
+
+-   **Veja nossas páginas de ajuda no [nosso wiki](https://github.com/SharebookBR/sharebook-frontend-next/wiki)**
+-   Entre no nosso [canal do Slack](https://join.slack.com/t/sharebookworkspace/shared_invite/zt-4fb3uu8m-VPrkhzdI9u3lsOlS1OkVvg)
+-   Abra uma issue [aqui](https://github.com/SharebookBR/sharebook-frontend-next/issues)

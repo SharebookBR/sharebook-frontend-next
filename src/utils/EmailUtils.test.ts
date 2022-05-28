@@ -7,8 +7,10 @@ describe('Testing EmailUtils', () => {
 		expect(result).toBeTruthy();
 	});
 	it('Email invalid', () => {
-		const emailInvalid = 'henrique_holtzhotmail.com';
-		const result = Utils.EmailIsValid(emailInvalid);
-		expect(result).not.toBeTruthy();
+		const invalidEmails = ['', 'henrique@', 'henrique_holtzhotmail.com'];
+		invalidEmails.forEach((item) => {
+			const result = Utils.EmailIsValid(item);
+			expect(result).not.toBeTruthy();
+		});
 	});
 });

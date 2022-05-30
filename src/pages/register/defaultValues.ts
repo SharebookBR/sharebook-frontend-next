@@ -8,7 +8,7 @@ const initialRegisterBase: IRegisterBase = {
 	city: '',
 	password: '',
 	confirmPassword: '',
-	zipCode: '',
+	postalCode: '',
 	number: '',
 	neighborhood: '',
 	state: ''

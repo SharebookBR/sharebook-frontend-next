@@ -67,9 +67,9 @@ const Register: NextPage = () => {
 		[setErrors]
 	);
 
-	const validateZipCode = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+	const validatePostalCode = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
-		if (value.length > 0 && !Utils.ZipCodeIsValid(value))
+		if (value.length > 0 && !Utils.PostalCodeIsValid(value))
 			setErrors((currentErrors) => {
 				return { ...currentErrors, hasErrors: true, [name]: 'CEP inválido!' };
 			});
@@ -198,16 +198,16 @@ const Register: NextPage = () => {
 						/>
 						<TextField
 							className={styles.input}
-							name="zipCode"
+							name="postalCode"
 							fullWidth
 							label="CEP"
-							value={values.zipCode}
+							value={values.postalCode}
 							placeholder="00000-000"
-							error={Boolean(errors.zipCode)}
-							helperText={errors.zipCode}
+							error={Boolean(errors.postalCode)}
+							helperText={errors.postalCode}
 							required
 							onChange={onChange}
-							onBlur={(e) => validateZipCode(e as React.ChangeEvent<HTMLInputElement>)}
+							onBlur={(e) => validatePostalCode(e as React.ChangeEvent<HTMLInputElement>)}
 						/>
 						<TextField
 							className={styles.input}

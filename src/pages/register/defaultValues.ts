@@ -8,7 +8,7 @@ const initialRegisterBase: IRegisterBase = {
 	city: '',
 	password: '',
 	confirmPassword: '',
-	zipCode: '',
+	postalCode: '',
 	number: '',
 	neighborhood: '',
 	state: ''
@@ -16,8 +16,8 @@ const initialRegisterBase: IRegisterBase = {
 
 export const initialValues: IValues = {
 	...initialRegisterBase,
-	acceptReceiveEmails: true,
-	acceptTerms: false
+	allowSendingEmail: true,
+	acceptTermOfUse: false
 };
 
 export const initialErrors: IErrors = {

@@ -2,6 +2,10 @@
 	padding: 5rem 11vw;
 	display: flex;
 
+	.left {
+		margin-top: 5.4rem;
+	}
+
 	.right {
 		padding-left: 13.1vw;
 
@@ -17,8 +21,7 @@
 			justify-content: space-between;
 
 			.input,
-			.login,
-			.registerButton {
+			.login {
 				margin-top: 24px;
 			}
 
@@ -37,6 +40,14 @@
 					a {
 						padding-left: 4px;
 					}
+				}
+
+				.registerButton {
+					margin-top: 16px;
+				}
+
+				.acceptLabels {
+					margin-top: 20px;
 				}
 			}
 		}

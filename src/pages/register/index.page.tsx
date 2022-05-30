@@ -1,13 +1,17 @@
 import React, { useState, useCallback } from 'react';
 import type { NextPage } from 'next';
-import { Button, Grid, TextField, Typography } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, FormGroup, Grid, TextField, Typography } from '@mui/material';
 
 import styles from './styles.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
-import { IValues, IErrors } from './types';
+import { IValues, IErrors, IViaCepResponse } from './types';
 import { initialValues, initialErrors } from './defaultValues';
 import Utils from '@sharebook-utils';
+import configs from '@sharebook-configs';
+import axios from 'axios';
+import LabelCheck from './LabelCheck';
+import sharebookAxiosClient from '@sharebook-axios';
 
 const Register: NextPage = () => {
 	const [values, setValues] = useState<IValues>(initialValues);
@@ -18,6 +22,14 @@ const Register: NextPage = () => {
 		if (name && value)
 			setValues((currentValues) => {
 				return { ...currentValues, [name]: value };
+			});
+	}, []);
+
+	const onChangeCheck = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, checked } = Utils.GetNameAndCheckedFromHTMLInputElementEvent(e);
+		if (name)
+			setValues((currentValues) => {
+				return { ...currentValues, [name]: checked };
 			});
 	}, []);
 
@@ -38,24 +50,62 @@ const Register: NextPage = () => {
 		[setErrors]
 	);
 
-	const validateEmail = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-		// TODO: Validar Telefone também caso o campo de fato deve permitir ambos (pendente de validação com UX)
+	const register = () => {
+		console.log('Register', values);
+		sharebookAxiosClient
+			.post('Account/Register', values)
+			.then((res: any) => {
+				console.log('res', res);
+			})
+			.catch((err: any) => {
+				console.log('err', err);
+			});
+	};
+
+	const validateEmail = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			// TODO: Validar Telefone também caso o campo de fato deve permitir ambos (pendente de validação com UX)
+			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
+			if (!Utils.EmailIsValid(value)) {
+				setErrors((currentErrors) => {
+					return { ...currentErrors, hasErrors: true, [name]: 'Email inválido!' };
+				});
+			} else if (value.length > 0) {
+				setErrors((currentErrors) => {
+					// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
+					return { ...currentErrors, hasErrors: false, [name]: '' };
+				});
+			}
+		},
+		[setErrors]
+	);
+
+	const validatePostalCode = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
-		if (!Utils.EmailIsValid(value)) {
+		if (value.length > 0 && !Utils.PostalCodeIsValid(value))
 			setErrors((currentErrors) => {
-				return { ...currentErrors, hasErrors: true, [name]: 'Email inválido!' };
+				return { ...currentErrors, hasErrors: true, [name]: 'CEP inválido!' };
 			});
-		} else if (value.length > 0) {
-			setErrors((currentErrors) => {
-				// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
-				return { ...currentErrors, hasErrors: false, [name]: '' };
-			});
+		else {
+			try {
+				const result: IViaCepResponse = await axios.get(`${configs.viaCepUrl}ws/${value}/json`);
+				const { uf: state, localidade: city, complemento: complement, logradouro: address, bairro: neighborhood } = result.data;
+				setValues((currentValues) => {
+					return { ...currentValues, state, city, complement, address, neighborhood };
+				});
+				setErrors((currentErrors) => {
+					// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
+					return { ...currentErrors, hasErrors: false, [name]: '' };
+				});
+			} catch {
+				console.error('Erro ao buscar informações do CEP');
+			}
 		}
 	}, []);
 
 	return (
 		<Grid container className={styles.container}>
-			<Grid item xs={2}>
+			<Grid item xs={2} className={styles.left}>
 				<Image src="/register.png" width={192} height={552} alt="Crie sua conta na Sharebook" />
 			</Grid>
 			<Grid item xs={10} className={styles.right}>
@@ -161,13 +211,16 @@ const Register: NextPage = () => {
 						/>
 						<TextField
 							className={styles.input}
-							name="zipCode"
+							name="postalCode"
 							fullWidth
 							label="CEP"
-							value={values.zipCode}
+							value={values.postalCode}
 							placeholder="00000-000"
+							error={Boolean(errors.postalCode)}
+							helperText={errors.postalCode}
 							required
 							onChange={onChange}
+							onBlur={(e) => validatePostalCode(e as React.ChangeEvent<HTMLInputElement>)}
 						/>
 						<TextField
 							className={styles.input}
@@ -189,12 +242,34 @@ const Register: NextPage = () => {
 							required
 							onChange={onChange}
 						/>
+						<TextField
+							className={styles.input}
+							name="state"
+							fullWidth
+							label="UF do estado"
+							value={values.state}
+							placeholder="UF do seu estado"
+							required
+							onChange={onChange}
+						/>
+						<FormGroup className={styles.acceptLabels}>
+							<FormControlLabel
+								control={
+									<Checkbox name="allowSendingEmail" defaultChecked onChange={onChangeCheck} value={values.allowSendingEmail} />
+								}
+								label={<LabelCheck label="Aceito receber e-mails e newsletter da Sharebook" />}
+							/>
+							<FormControlLabel
+								control={<Checkbox name="acceptTermOfUse" onChange={onChangeCheck} value={values.acceptTermOfUse} />}
+								label={<LabelCheck label="Eu concordo com os Termos de uso" />}
+							/>
+						</FormGroup>
 						<Button
 							className={styles.registerButton}
 							fullWidth
-							disabled={errors.hasErrors}
+							disabled={errors.hasErrors || !values.acceptTermOfUse}
 							variant="contained"
-							onClick={() => console.log('Cadastrar: ', JSON.stringify(values))}
+							onClick={() => register()}
 						>
 							Cadastrar
 						</Button>

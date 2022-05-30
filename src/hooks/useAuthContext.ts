@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import axiosClient from '@sharebook-axios';
 
 interface IAuthContext {
 	authenticated: boolean;
@@ -8,6 +9,11 @@ interface IAuthContext {
 	name?: string;
 	profile?: string;
 	userId?: string;
+}
+
+interface ILogin {
+	email: string;
+	password: string;
 }
 
 const initialValue: IAuthContext = { authenticated: false };
@@ -24,11 +30,22 @@ const keyLocalStorage = 'shareBookUser';
 export function useAuthContext() {
 	const [authContext, setAuthContext] = useState<IAuthContext>(initialValue);
 
-	const login = useCallback((newAuth: IAuthContext) => {
-		console.log('Login efetuado para ' + newAuth.email);
-		localStorage.setItem(keyLocalStorage, JSON.stringify(newAuth));
-		setAuthContext(newAuth);
-	}, []);
+	const login = useCallback(
+		async (data: ILogin): Promise<boolean> => {
+			try {
+				const { data: responseData } = await axiosClient.post('Account/Login', data);
+				localStorage.setItem(keyLocalStorage, JSON.stringify(responseData?.value));
+				setAuthContext(responseData?.value);
+				return true;
+			} catch {
+				console.log('Falha no login.');
+				localStorage.removeItem(keyLocalStorage);
+				if (authContext != initialValue) setAuthContext(initialValue);
+				return false;
+			}
+		},
+		[authContext, setAuthContext]
+	);
 
 	const logout = useCallback(() => {
 		console.log('Logout efetuado!');
@@ -44,5 +61,5 @@ export function useAuthContext() {
 		}
 	}, []);
 
-	return { authContext, login, logout };
+	return { authenticated: authContext.authenticated, authContext, login, logout };
 }

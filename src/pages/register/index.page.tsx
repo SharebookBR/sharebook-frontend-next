@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import type { NextPage } from 'next';
-import { Button, Grid, TextField, Typography } from '@mui/material';
+import { Button, Checkbox, FormControlLabel, FormGroup, Grid, TextField, Typography } from '@mui/material';
 
 import styles from './styles.module.scss';
 import Image from 'next/image';
@@ -10,6 +10,7 @@ import { initialValues, initialErrors } from './defaultValues';
 import Utils from '@sharebook-utils';
 import configs from '@sharebook-configs';
 import axios from 'axios';
+import LabelCheck from './LabelCheck';
 
 const Register: NextPage = () => {
 	const [values, setValues] = useState<IValues>(initialValues);
@@ -20,6 +21,14 @@ const Register: NextPage = () => {
 		if (name && value)
 			setValues((currentValues) => {
 				return { ...currentValues, [name]: value };
+			});
+	}, []);
+
+	const onChangeCheck = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, checked } = Utils.GetNameAndCheckedFromHTMLInputElementEvent(e);
+		if (name)
+			setValues((currentValues) => {
+				return { ...currentValues, [name]: checked };
 			});
 	}, []);
 
@@ -83,7 +92,7 @@ const Register: NextPage = () => {
 
 	return (
 		<Grid container className={styles.container}>
-			<Grid item xs={2}>
+			<Grid item xs={2} className={styles.left}>
 				<Image src="/register.png" width={192} height={552} alt="Crie sua conta na Sharebook" />
 			</Grid>
 			<Grid item xs={10} className={styles.right}>
@@ -230,6 +239,18 @@ const Register: NextPage = () => {
 							required
 							onChange={onChange}
 						/>
+						<FormGroup className={styles.acceptLabels}>
+							<FormControlLabel
+								control={
+									<Checkbox name="acceptReceiveEmails" defaultChecked onChange={onChangeCheck} value={values.acceptReceiveEmails} />
+								}
+								label={<LabelCheck label="Aceito receber e-mails e newsletter da Sharebook" />}
+							/>
+							<FormControlLabel
+								control={<Checkbox name="acceptTerms" onChange={onChangeCheck} value={values.acceptTerms} />}
+								label={<LabelCheck label="Eu concordo com os Termos de uso" />}
+							/>
+						</FormGroup>
 						<Button
 							className={styles.registerButton}
 							fullWidth

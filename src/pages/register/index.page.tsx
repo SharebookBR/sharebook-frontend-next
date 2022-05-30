@@ -54,10 +54,10 @@ const Register: NextPage = () => {
 		console.log('Register', values);
 		sharebookAxiosClient
 			.post('Account/Register', values)
-			.then((res) => {
+			.then((res: any) => {
 				console.log('res', res);
 			})
-			.catch((err) => {
+			.catch((err: any) => {
 				console.log('err', err);
 			});
 	};

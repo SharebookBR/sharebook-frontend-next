@@ -8,7 +8,7 @@ const Home: NextPage = () => {
 	const [books, setBooks] = useState<IBook[]>([]);
 
 	const getAvailableBooks = () => {
-		sharebookAxiosClient.get('book/AvailableBooks').then((result) => {
+		sharebookAxiosClient.get('book/AvailableBooks').then((result: any) => {
 			console.log('result', result);
 			setBooks(result.data);
 		});

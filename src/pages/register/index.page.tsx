@@ -220,6 +220,16 @@ const Register: NextPage = () => {
 							required
 							onChange={onChange}
 						/>
+						<TextField
+							className={styles.input}
+							name="state"
+							fullWidth
+							label="UF do estado"
+							value={values.state}
+							placeholder="UF do seu estado"
+							required
+							onChange={onChange}
+						/>
 						<Button
 							className={styles.registerButton}
 							fullWidth

@@ -49,6 +49,26 @@ const Register: NextPage = () => {
 		[setErrors]
 	);
 
+	const register = () => {
+		/* {"name":"Henrique Holtz",
+		"age":22,
+		"email":"henrique_holtz@hotmail.com",
+		"password":"pixe2008",
+		"confirmPassword":"pixe2008",
+		"phone":"(44) 99751-5677",
+		"postalCode":"85950-000",
+		"street":"Machado de assis",
+		"number":"2025",
+		"complement":"",
+		"neighborhood":"Oswaldo Cruz",
+		"city":"Palotina","state":"PR",
+		"country":"Brasil",
+		"allowSendingEmail":true,
+		"acceptTermOfUse":true}
+		*/
+		console.log('');
+	};
+
 	const validateEmail = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			// TODO: Validar Telefone também caso o campo de fato deve permitir ambos (pendente de validação com UX)
@@ -242,19 +262,19 @@ const Register: NextPage = () => {
 						<FormGroup className={styles.acceptLabels}>
 							<FormControlLabel
 								control={
-									<Checkbox name="acceptReceiveEmails" defaultChecked onChange={onChangeCheck} value={values.acceptReceiveEmails} />
+									<Checkbox name="allowSendingEmail" defaultChecked onChange={onChangeCheck} value={values.allowSendingEmail} />
 								}
 								label={<LabelCheck label="Aceito receber e-mails e newsletter da Sharebook" />}
 							/>
 							<FormControlLabel
-								control={<Checkbox name="acceptTerms" onChange={onChangeCheck} value={values.acceptTerms} />}
+								control={<Checkbox name="acceptTermOfUse" onChange={onChangeCheck} value={values.acceptTermOfUse} />}
 								label={<LabelCheck label="Eu concordo com os Termos de uso" />}
 							/>
 						</FormGroup>
 						<Button
 							className={styles.registerButton}
 							fullWidth
-							disabled={errors.hasErrors}
+							disabled={errors.hasErrors || !values.acceptTermOfUse}
 							variant="contained"
 							onClick={() => console.log('Cadastrar: ', JSON.stringify(values))}
 						>

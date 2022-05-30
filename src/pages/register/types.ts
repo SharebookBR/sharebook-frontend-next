@@ -14,8 +14,8 @@ export interface IRegisterBase {
 }
 
 export interface IValues extends IRegisterBase {
-	acceptReceiveEmails: boolean;
-	acceptTerms: boolean;
+	allowSendingEmail: boolean;
+	acceptTermOfUse: boolean;
 }
 
 export interface IErrors extends IRegisterBase {

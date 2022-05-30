@@ -28,7 +28,7 @@ export function SharebookNavBar() {
 			<Toolbar>
 				<List className={styles.list}>
 					<SharebookNavBarItemText text="Início" path="/" />
-					<SharebookNavBarItem path="/apoie-projeto">
+					<SharebookNavBarItem path="/livros/doar">
 						<Button className={styles.donateButton} variant="contained" onClick={() => console.log('x')}>
 							Doar um livro
 							<Image src="/mini-book.png" width={35} height={18} alt="Doar um livro" />

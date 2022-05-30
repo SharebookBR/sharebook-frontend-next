@@ -11,6 +11,7 @@ import Utils from '@sharebook-utils';
 import configs from '@sharebook-configs';
 import axios from 'axios';
 import LabelCheck from './LabelCheck';
+import sharebookAxiosClient from '@sharebook-axios';
 
 const Register: NextPage = () => {
 	const [values, setValues] = useState<IValues>(initialValues);
@@ -50,23 +51,15 @@ const Register: NextPage = () => {
 	);
 
 	const register = () => {
-		/* {"name":"Henrique Holtz",
-		"age":22,
-		"email":"henrique_holtz@hotmail.com",
-		"password":"pixe2008",
-		"confirmPassword":"pixe2008",
-		"phone":"(44) 99751-5677",
-		"postalCode":"85950-000",
-		"street":"Machado de assis",
-		"number":"2025",
-		"complement":"",
-		"neighborhood":"Oswaldo Cruz",
-		"city":"Palotina","state":"PR",
-		"country":"Brasil",
-		"allowSendingEmail":true,
-		"acceptTermOfUse":true}
-		*/
-		console.log('');
+		console.log('Register', values);
+		sharebookAxiosClient
+			.post('Account/Register', values)
+			.then((res) => {
+				console.log('res', res);
+			})
+			.catch((err) => {
+				console.log('err', err);
+			});
 	};
 
 	const validateEmail = useCallback(
@@ -276,7 +269,7 @@ const Register: NextPage = () => {
 							fullWidth
 							disabled={errors.hasErrors || !values.acceptTermOfUse}
 							variant="contained"
-							onClick={() => console.log('Cadastrar: ', JSON.stringify(values))}
+							onClick={() => register()}
 						>
 							Cadastrar
 						</Button>

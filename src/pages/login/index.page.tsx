@@ -2,7 +2,6 @@ import React, { useCallback, useState } from 'react';
 import { Button, Grid, TextField, Typography } from '@mui/material';
 import type { NextPage } from 'next';
 import Image from 'next/image';
-import axiosClient from '@sharebook-axios';
 import Utils from '@sharebook-utils';
 
 import styles from './styles.module.scss';
@@ -21,6 +20,7 @@ const Login: NextPage = () => {
 	const [password, setPassword] = useState('');
 	const [emailError, setEmailError] = useState('');
 	const [passwordError, setPasswordError] = useState('');
+	const [loginError, setLoginError] = useState(false);
 	const { authContext, login } = useAuthContext();
 	if (authContext.authenticated) window.location.href = window.location.origin; //go to home
 
@@ -52,8 +52,8 @@ const Login: NextPage = () => {
 	);
 
 	const handleLogin = useCallback(async () => {
-		const result = await axiosClient.post('Account/Login', { email, password });
-		login(result.data?.value);
+		const loginIsOk = await login({ email, password });
+		if (!loginIsOk) setLoginError(true);
 	}, [email, password, login]);
 
 	return (
@@ -112,6 +112,11 @@ const Login: NextPage = () => {
 					>
 						Entrar
 					</Button>
+					{loginError && (
+						<Typography className={styles.loginError} color="error">
+							Login e/ou senha inválidos! Verifique seus dados e tente novamente.
+						</Typography>
+					)}
 					<Typography className={styles.register}>
 						Ainda não tem conta?
 						<Link href="/register" passHref>

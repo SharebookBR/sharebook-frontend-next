@@ -5,9 +5,11 @@ import { Button, Grid, TextField, Typography } from '@mui/material';
 import styles from './styles.module.scss';
 import Image from 'next/image';
 import Link from 'next/link';
-import { IValues, IErrors } from './types';
+import { IValues, IErrors, IViaCepResponse } from './types';
 import { initialValues, initialErrors } from './defaultValues';
 import Utils from '@sharebook-utils';
+import configs from '@sharebook-configs';
+import axios from 'axios';
 
 const Register: NextPage = () => {
 	const [values, setValues] = useState<IValues>(initialValues);
@@ -38,18 +40,44 @@ const Register: NextPage = () => {
 		[setErrors]
 	);
 
-	const validateEmail = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-		// TODO: Validar Telefone também caso o campo de fato deve permitir ambos (pendente de validação com UX)
+	const validateEmail = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			// TODO: Validar Telefone também caso o campo de fato deve permitir ambos (pendente de validação com UX)
+			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
+			if (!Utils.EmailIsValid(value)) {
+				setErrors((currentErrors) => {
+					return { ...currentErrors, hasErrors: true, [name]: 'Email inválido!' };
+				});
+			} else if (value.length > 0) {
+				setErrors((currentErrors) => {
+					// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
+					return { ...currentErrors, hasErrors: false, [name]: '' };
+				});
+			}
+		},
+		[setErrors]
+	);
+
+	const validateZipCode = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
-		if (!Utils.EmailIsValid(value)) {
+		if (value.length > 0 && !Utils.ZipCodeIsValid(value))
 			setErrors((currentErrors) => {
-				return { ...currentErrors, hasErrors: true, [name]: 'Email inválido!' };
+				return { ...currentErrors, hasErrors: true, [name]: 'CEP inválido!' };
 			});
-		} else if (value.length > 0) {
-			setErrors((currentErrors) => {
-				// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
-				return { ...currentErrors, hasErrors: false, [name]: '' };
-			});
+		else {
+			try {
+				const result: IViaCepResponse = await axios.get(`${configs.viaCepUrl}ws/${value}/json`);
+				const { uf: state, localidade: city, complemento: complement, logradouro: address, bairro: neighborhood } = result.data;
+				setValues((currentValues) => {
+					return { ...currentValues, state, city, complement, address, neighborhood };
+				});
+				setErrors((currentErrors) => {
+					// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
+					return { ...currentErrors, hasErrors: false, [name]: '' };
+				});
+			} catch {
+				console.error('Erro ao buscar informações do CEP');
+			}
 		}
 	}, []);
 
@@ -166,8 +194,11 @@ const Register: NextPage = () => {
 							label="CEP"
 							value={values.zipCode}
 							placeholder="00000-000"
+							error={Boolean(errors.zipCode)}
+							helperText={errors.zipCode}
 							required
 							onChange={onChange}
+							onBlur={(e) => validateZipCode(e as React.ChangeEvent<HTMLInputElement>)}
 						/>
 						<TextField
 							className={styles.input}

@@ -21,3 +21,15 @@ export interface IValues extends IRegisterBase {
 export interface IErrors extends IRegisterBase {
 	hasErrors: boolean;
 }
+
+interface IViaCepData {
+	bairro: string;
+	complemento: string;
+	localidade: string;
+	logradouro: string;
+	uf: string;
+}
+
+export interface IViaCepResponse {
+	data: IViaCepData;
+}

@@ -2,7 +2,8 @@ import { IValues, IErrors, IRegisterBase } from './types';
 
 const initialRegisterBase: IRegisterBase = {
 	name: '',
-	emailOrPhone: '',
+	email: '',
+	phone: '',
 	address: '',
 	complement: '',
 	city: '',

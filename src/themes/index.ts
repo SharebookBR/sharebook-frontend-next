@@ -2,9 +2,66 @@ import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
 	typography: {
+		fontWeightRegular: 400,
+		fontWeightBold: 700,
+		fontSize: 16,
+		fontFamily: ['Roboto', 'sans-serif'].join(','),
 		allVariants: {
-			fontFamily: 'Roboto Regular, sans-serif',
+			fontFamily: 'Roboto',
 			color: '#282828'
+		},
+		body1: {
+			/* Body XLarge */
+			fontSize: 24,
+			fontWeight: 400,
+			lineHeight: '33.6px'
+		},
+		body2: {
+			/* Body Large */
+			fontSize: 20,
+			fontWeight: 400,
+			lineHeight: '28px',
+			letterSpacing: '0.2px'
+		},
+		button: {
+			textTransform: 'none',
+			fontWeight: 700,
+			fontSize: '1.25rem'
+		},
+		subtitle1: {
+			fontSize: 24,
+			fontWeight: 700,
+			lineHeight: '33.6px'
+		},
+		subtitle2: {
+			fontSize: 20,
+			fontWeight: 700,
+			lineHeight: '28px'
+		},
+		h1: {
+			fontSize: 89,
+			fontWeight: 700
+		},
+		h2: {
+			fontSize: 67,
+			fontWeight: 700
+		},
+		h3: {
+			fontSize: 50,
+			fontWeight: 700
+		},
+		h4: {
+			fontSize: 38,
+			fontWeight: 700,
+			lineHeight: '45px'
+		},
+		h5: {
+			fontSize: 24,
+			fontWeight: 700
+		},
+		h6: {
+			fontSize: 20,
+			fontWeight: 700
 		},
 		/* customTypography.d.ts */
 		navbar: {
@@ -44,12 +101,6 @@ const theme = createTheme({
 			}
 		},
 		MuiButtonBase: {
-			styleOverrides: {
-				root: {
-					fontWeight: '700',
-					fontSize: '1.25rem'
-				}
-			},
 			defaultProps: {
 				disableRipple: true
 			},
@@ -66,9 +117,7 @@ const theme = createTheme({
 		MuiButton: {
 			styleOverrides: {
 				root: {
-					textTransform: 'none',
-					fontWeight: '700',
-					fontSize: '1.25rem'
+					height: '48px'
 				}
 			},
 			variants: [

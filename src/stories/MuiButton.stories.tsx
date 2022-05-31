@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
 import { Button, ThemeProvider } from '@mui/material';
-import theme from '../themes';
+import ThemeProviderWithFont from './ThemeProviderWithFont';
 
 const controlSelect = { control: { type: 'select' } };
 const radioSelect = { control: { type: 'radio' } };
@@ -13,7 +13,7 @@ export default {
 	argTypes: {
 		// https://mui.com/pt/material-ui/api/button/
 		color: {
-			options: ['inherit', 'primary', 'secondary', 'tertiary', 'success', 'error', 'info', 'warning'],
+			options: ['inherit', 'primary', 'secondary', 'success', 'error', 'info', 'warning'],
 			...controlSelect,
 			type: 'string'
 		},
@@ -44,10 +44,9 @@ export default {
 
 // 👇 We create a "template" of how args map to rendering
 const Template: ComponentStory<typeof Button> = (args) => (
-	<ThemeProvider theme={theme}>
+	<ThemeProviderWithFont>
 		        <Button {...args}>{`${args?.variant} ${args?.color}`}</Button>
-		    
-	</ThemeProvider>
+	</ThemeProviderWithFont>
 );
 
 export const MuiButton = Template.bind({});

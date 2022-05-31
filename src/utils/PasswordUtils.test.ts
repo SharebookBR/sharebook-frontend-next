@@ -9,8 +9,8 @@ describe('Testing PasswordUtils', () => {
 		});
 	});
 	it('Password invalid', () => {
-		const invalidPassowrds = ['', '1234', 'asdbkasdhajksdhasjkdhasdjkhasjdaksdjsa'];
-		invalidPassowrds.forEach((item) => {
+		const invalidPasswords = ['', '1234', 'asdbkasdhajksdhasjkdhasdjkhasjdaksdjsa'];
+		invalidPasswords.forEach((item) => {
 			const result = Utils.PasswordIsValid(item);
 			expect(result).not.toBeTruthy();
 		});

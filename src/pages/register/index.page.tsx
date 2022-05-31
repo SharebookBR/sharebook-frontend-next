@@ -19,7 +19,7 @@ const Register: NextPage = () => {
 
 	const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
-		if (name && value)
+		if (name)
 			setValues((currentValues) => {
 				return { ...currentValues, [name]: value };
 			});
@@ -39,6 +39,23 @@ const Register: NextPage = () => {
 			if (!Utils.PasswordIsValid(value)) {
 				setErrors((currentErrors) => {
 					return { ...currentErrors, hasErrors: true, [name]: 'Senha inválida!' };
+				});
+			} else if (value.length > 0) {
+				setErrors((currentErrors) => {
+					// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
+					return { ...currentErrors, hasErrors: false, [name]: '' };
+				});
+			}
+		},
+		[setErrors]
+	);
+
+	const validatePhone = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
+			if (!Utils.PhoneIsValid(value)) {
+				setErrors((currentErrors) => {
+					return { ...currentErrors, hasErrors: true, [name]: 'Telefone inválido!' };
 				});
 			} else if (value.length > 0) {
 				setErrors((currentErrors) => {
@@ -128,16 +145,29 @@ const Register: NextPage = () => {
 						/>
 						<TextField
 							className={styles.input}
-							name="emailOrPhone"
+							name="email"
 							fullWidth
-							label="E-mail ou número de celular"
-							value={values.emailOrPhone}
-							placeholder="E-mail ou número de celular"
+							label="E-mail"
+							value={values.email}
+							placeholder="exemplo@email.com"
 							required
 							onChange={onChange}
 							onBlur={(e) => validateEmail(e as React.ChangeEvent<HTMLInputElement>)}
-							error={Boolean(errors.emailOrPhone)}
-							helperText={errors.emailOrPhone}
+							error={Boolean(errors.email)}
+							helperText={errors.email}
+						/>
+						<TextField
+							className={styles.input}
+							name="phone"
+							fullWidth
+							label="DDD + Telefone"
+							value={values.phone}
+							placeholder="(00) 0 0000-0000"
+							required
+							onChange={onChange}
+							onBlur={(e) => validatePhone(e as React.ChangeEvent<HTMLInputElement>)}
+							error={Boolean(errors.phone)}
+							helperText={errors.phone}
 						/>
 						<TextField
 							className={styles.input}

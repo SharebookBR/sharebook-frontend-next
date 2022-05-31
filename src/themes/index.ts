@@ -23,6 +23,18 @@ const theme = createTheme({
 			lineHeight: '28px',
 			letterSpacing: '0.2px'
 		},
+		body3: {
+			/* Body Medium */
+			fontSize: 16,
+			fontWeight: 400,
+			lineHeight: '22.4px'
+		},
+		body4: {
+			/* Body Small */
+			fontSize: 12,
+			fontWeight: 400,
+			lineHeight: '14.06px'
+		},
 		button: {
 			textTransform: 'none',
 			fontWeight: 700,

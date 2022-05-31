@@ -129,6 +129,20 @@ const theme = createTheme({
 					}
 				}
 			]
+		},
+		MuiInputBase: {
+			styleOverrides: {
+				root: {
+					fontSize: 16
+				}
+			}
+		},
+		MuiInputLabel: {
+			styleOverrides: {
+				root: {
+					fontSize: 16
+				}
+			}
 		}
 	}
 });

@@ -1,5 +1,7 @@
 import { createTheme } from '@mui/material/styles';
 
+/* customTypography.d.ts */
+
 const theme = createTheme({
 	typography: {
 		fontWeightRegular: 400,
@@ -50,6 +52,16 @@ const theme = createTheme({
 			fontWeight: 700,
 			lineHeight: '28px'
 		},
+		subtitle3: {
+			fontSize: 16,
+			fontWeight: 700,
+			lineHeight: '22px'
+		},
+		subtitle4: {
+			fontSize: 12,
+			fontWeight: 700,
+			lineHeight: '14px'
+		},
 		h1: {
 			fontSize: 89,
 			fontWeight: 700
@@ -74,13 +86,6 @@ const theme = createTheme({
 		h6: {
 			fontSize: 20,
 			fontWeight: 700
-		},
-		/* customTypography.d.ts */
-		navbar: {
-			fontStyle: 'normal',
-			fontWeight: 600,
-			lineHeight: '1.25rem',
-			fontSize: '0.82rem'
 		}
 	},
 	palette: {

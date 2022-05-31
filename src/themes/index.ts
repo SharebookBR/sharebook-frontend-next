@@ -1,6 +1,7 @@
 import { createTheme } from '@mui/material/styles';
 
 /* customTypography.d.ts */
+/*  customCollors.d.ts */
 
 const theme = createTheme({
 	typography: {
@@ -102,11 +103,6 @@ const theme = createTheme({
 		},
 		success: {
 			main: '#2FCA51'
-		},
-		/*  customCollors.d.ts */
-		tertiary: {
-			main: '#007AFF',
-			contrastText: '#FFF'
 		}
 	},
 	components: {

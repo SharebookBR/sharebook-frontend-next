@@ -13,7 +13,7 @@ interface ISharebookNavBarItemText {
 const SharebookNavBarItemText = ({ text, path }: ISharebookNavBarItemText) => {
 	return (
 		<SharebookNavBarItem path={path}>
-			<Typography variant="navbar" color="secondary">
+			<Typography variant="subtitle3" color="secondary">
 				{text}
 			</Typography>
 		</SharebookNavBarItem>
@@ -41,7 +41,7 @@ export function SharebookNavBar() {
 						<>
 							{authContext.profile === 'User' && <SharebookNavBarItemText text="Meu Painel" path="/panel" />}
 							<ListItem>
-								<Typography>{authContext.name}</Typography>
+								<Typography variant="subtitle3">{authContext.name}</Typography>
 							</ListItem>
 							<Button onClick={() => logout()}>Logout</Button>
 						</>

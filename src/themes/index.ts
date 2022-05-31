@@ -3,8 +3,8 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
 	typography: {
 		allVariants: {
-			fontFamily: 'Poppins, sans-serif',
-			color: '#2D3748'
+			fontFamily: 'Roboto Regular, sans-serif',
+			color: '#282828'
 		},
 		/* customTypography.d.ts */
 		navbar: {
@@ -16,15 +16,18 @@ const theme = createTheme({
 	},
 	palette: {
 		primary: {
-			main: '#16ADE2',
+			main: '#00AFE5',
 			contrastText: '#FFF'
 		},
 		secondary: {
-			main: '#0E2C4F',
+			main: '#0E2C50',
 			contrastText: '#FFF'
 		},
 		error: {
-			main: '#FF0000'
+			main: '#E82020'
+		},
+		success: {
+			main: '#2FCA51'
 		},
 		/*  customCollors.d.ts */
 		tertiary: {
@@ -41,16 +44,42 @@ const theme = createTheme({
 			}
 		},
 		MuiButtonBase: {
+			styleOverrides: {
+				root: {
+					fontWeight: '700',
+					fontSize: '1.25rem'
+				}
+			},
 			defaultProps: {
 				disableRipple: true
-			}
+			},
+			variants: [
+				{
+					props: { disabled: true },
+					style: {
+						color: '#FFF !important',
+						backgroundColor: '#B7BEC0 !important'
+					}
+				}
+			]
 		},
 		MuiButton: {
 			styleOverrides: {
 				root: {
-					textTransform: 'none'
+					textTransform: 'none',
+					fontWeight: '700',
+					fontSize: '1.25rem'
 				}
-			}
+			},
+			variants: [
+				{
+					props: { disabled: true },
+					style: {
+						color: '#FFF',
+						backgroundColor: '#B7BEC0'
+					}
+				}
+			]
 		}
 	}
 });

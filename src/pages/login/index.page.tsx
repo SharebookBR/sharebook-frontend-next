@@ -59,22 +59,20 @@ const Login: NextPage = () => {
 	return (
 		<>
 			<Grid container className={styles.wrapper}>
-				<Grid item xs={8} className={styles.left}>
-					<Typography variant="h1" className={styles.title}>
-						Doe e receba livros na Sharebook!
-					</Typography>
-					<Typography variant="h3" className={styles.subTitle}>
+				<Grid item xs={7} className={styles.left}>
+					<Typography variant="h4">Doe e receba livros na Sharebook!</Typography>
+					<Typography variant="body1" className={styles.subTitle}>
 						Interaja com leitores de todo o Brasil e descubra seu novo livro favorito!
 					</Typography>
 					<Button variant="contained" className={styles.button}>
 						Criar minha conta grátis!
 					</Button>
-					<Image src="/login.png" width={645} height={427} alt="Doe e receba livros na Sharebook!" />
+					<Image src="/login.png" width={610} height={404} alt="Doe e receba livros na Sharebook!" />
 				</Grid>
 
-				<Grid item xs={4} className={styles.right}>
+				<Grid item xs={5} className={styles.right}>
 					<Typography>Boas vindas</Typography>
-					<Typography variant="h1" className={styles.title}>
+					<Typography variant="h4" className={styles.title}>
 						Faça login na Sharebook
 					</Typography>
 					<TextField
@@ -108,7 +106,7 @@ const Login: NextPage = () => {
 						onClick={handleLogin}
 						fullWidth
 						variant="contained"
-						className={styles.login}
+						className={styles.loginButton}
 					>
 						Entrar
 					</Button>
@@ -117,13 +115,15 @@ const Login: NextPage = () => {
 							Login e/ou senha inválidos! Verifique seus dados e tente novamente.
 						</Typography>
 					)}
-					<Typography className={styles.register}>
-						Ainda não tem conta?
-						<Link href="/register" passHref>
-							Crie uma grátis
-						</Link>
-						.
-					</Typography>
+					<div className={styles.registerWrapper}>
+						<Typography variant="body4">
+							Ainda não tem conta?
+							<Link href="/register" passHref>
+								Crie uma grátis
+							</Link>
+							.
+						</Typography>
+					</div>
 				</Grid>
 			</Grid>
 		</>

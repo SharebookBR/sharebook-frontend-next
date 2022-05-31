@@ -3,32 +3,28 @@
 	display: flex;
 
 	.left {
-		h1,
-		h3 {
+		h4,
+		p {
 			position: absolute;
-			max-width: 32rem;
+			max-width: 27.56rem;
 			z-index: 1;
 			color: #fff;
-			margin: 4.5rem 0 1.65rem 5.8rem;
-		}
-		.title {
-			font-size: 2.5rem;
-			font-weight: 700;
+			margin: 4.5rem 0 1.65rem 5.62rem;
 		}
 		.subTitle {
 			margin-top: 12rem;
-			font-size: 1.75rem;
-			font-weight: 400;
 		}
 		.button {
 			position: absolute;
+			padding: 0 8px;
+			height: 36px;
 			border-radius: 1.25rem;
-			margin: 20.5rem 0 0 22.5rem;
+			margin: 17.87rem 0 0 24.3rem;
 			z-index: 1;
 			font-size: 0.75rem;
 			font-weight: 600;
-			line-height: 18px;
-			color: #0e2c4f;
+			line-height: 140%;
+			color: #0e2c50;
 			background-color: #fff;
 			flex: none;
 			order: 0;
@@ -37,16 +33,12 @@
 	}
 
 	.right {
-		max-width: 22rem;
+		max-width: 21.37rem;
 		.title {
-			font-size: 1.73rem;
-			font-weight: 700;
-			line-height: 2.62rem;
-			color: #4f4f4f;
+			width: 26.31rem;
 		}
 
-		.login {
-			padding: 14px;
+		.loginButton {
 			margin-top: 1.5rem;
 		}
 
@@ -58,11 +50,10 @@
 			margin-top: 0.5rem;
 		}
 
-		.register {
-			margin-top: 2.19rem;
+		.registerWrapper {
+			margin-top: 1.3rem;
 			width: 100%;
 			text-align: center;
-			font-size: 0.93rem;
 
 			a {
 				padding-left: 4px;

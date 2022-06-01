@@ -21,8 +21,8 @@ describe('RegisterPage (fields/buttons requireds)', () => {
 	it('Contains input to phone', () => {
 		expect(screen.getByTestId('input-phone')).toBeInTheDocument();
 	});
-	it('Contains input to address', () => {
-		expect(screen.getByTestId('input-address')).toBeInTheDocument();
+	it('Contains input to street', () => {
+		expect(screen.getByTestId('input-street')).toBeInTheDocument();
 	});
 	it('Contains input to city', () => {
 		expect(screen.getByTestId('input-city')).toBeInTheDocument();

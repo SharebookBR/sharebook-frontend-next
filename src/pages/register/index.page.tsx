@@ -72,7 +72,7 @@ const Register: NextPage = () => {
 	const register = () => {
 		console.log('Register', values);
 		sharebookAxiosClient
-			.post('Account/Register', values)
+			.post('Account/Register', { country: 'Brasil', ...values })
 			.then((res: any) => {
 				console.log('res', res);
 			})
@@ -111,9 +111,9 @@ const Register: NextPage = () => {
 			else {
 				try {
 					const result: IViaCepResponse = await axios.get(`${configs.viaCepUrl}ws/${value}/json`);
-					const { uf: state, localidade: city, complemento: complement, logradouro: address, bairro: neighborhood } = result.data;
+					const { uf: state, localidade: city, complemento: complement, logradouro: street, bairro: neighborhood } = result.data;
 					setValues((currentValues) => {
-						return { ...currentValues, state, city, complement, address, neighborhood };
+						return { ...currentValues, state, city, complement, street, neighborhood };
 					});
 					setErrors((currentErrors) => {
 						// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
@@ -179,12 +179,12 @@ const Register: NextPage = () => {
 							helperText={errors.phone}
 						/>
 						<TextField
-							data-testid="input-address"
+							data-testid="input-street"
 							className={styles.input}
-							name="address"
+							name="street"
 							fullWidth
 							label="Endereço"
-							value={values.address}
+							value={values.street}
 							placeholder="Digite seu endereço"
 							required
 							onChange={onChange}

@@ -140,6 +140,7 @@ const Register: NextPage = () => {
 				<Grid container className={styles.containerForm}>
 					<Grid item xs={12} md={6} className={styles.leftForm}>
 						<TextField
+							data-testid="input-name"
 							className={styles.input}
 							name="name"
 							fullWidth
@@ -150,6 +151,7 @@ const Register: NextPage = () => {
 							onChange={onChange}
 						/>
 						<TextField
+							data-testid="input-email"
 							className={styles.input}
 							name="email"
 							fullWidth
@@ -164,6 +166,7 @@ const Register: NextPage = () => {
 						/>
 						<TextField
 							className={styles.input}
+							data-testid="input-phone"
 							name="phone"
 							fullWidth
 							label="DDD + Telefone"
@@ -176,6 +179,7 @@ const Register: NextPage = () => {
 							helperText={errors.phone}
 						/>
 						<TextField
+							data-testid="input-address"
 							className={styles.input}
 							name="address"
 							fullWidth
@@ -195,6 +199,7 @@ const Register: NextPage = () => {
 							onChange={onChange}
 						/>
 						<TextField
+							data-testid="input-city"
 							className={styles.input}
 							name="city"
 							fullWidth
@@ -205,6 +210,7 @@ const Register: NextPage = () => {
 							onChange={onChange}
 						/>
 						<TextField
+							data-testid="input-password"
 							className={styles.input}
 							name="password"
 							fullWidth
@@ -219,6 +225,7 @@ const Register: NextPage = () => {
 							onChange={onChange}
 						/>
 						<TextField
+							data-testid="input-confirmPassword"
 							className={styles.input}
 							name="confirmPassword"
 							fullWidth
@@ -236,6 +243,7 @@ const Register: NextPage = () => {
 
 					<Grid item xs={12} md={6} className={styles.rightForm}>
 						<TextField
+							data-testid="input-birthDate"
 							className={styles.input}
 							name="birthDate"
 							fullWidth
@@ -246,6 +254,7 @@ const Register: NextPage = () => {
 							onChange={onChange}
 						/>
 						<TextField
+							data-testid="input-postalCode"
 							className={styles.input}
 							name="postalCode"
 							fullWidth
@@ -259,6 +268,7 @@ const Register: NextPage = () => {
 							onBlur={(e) => validatePostalCode(e as React.ChangeEvent<HTMLInputElement>)}
 						/>
 						<TextField
+							data-testid="input-number"
 							className={styles.input}
 							name="number"
 							fullWidth
@@ -269,6 +279,7 @@ const Register: NextPage = () => {
 							onChange={onChange}
 						/>
 						<TextField
+							data-testid="input-neighborhood"
 							className={styles.input}
 							name="neighborhood"
 							fullWidth
@@ -279,6 +290,7 @@ const Register: NextPage = () => {
 							onChange={onChange}
 						/>
 						<TextField
+							data-testid="input-state"
 							className={styles.input}
 							name="state"
 							fullWidth
@@ -296,11 +308,13 @@ const Register: NextPage = () => {
 								label={<LabelCheck label="Aceito receber e-mails e newsletter da Sharebook" />}
 							/>
 							<FormControlLabel
+								data-testid="input-acceptTermOfUse"
 								control={<Checkbox name="acceptTermOfUse" onChange={onChangeCheck} value={values.acceptTermOfUse} />}
 								label={<LabelCheck label="Eu concordo com os Termos de uso" />}
 							/>
 						</FormGroup>
 						<Button
+							data-testid="button-register"
 							className={styles.registerButton}
 							fullWidth
 							disabled={errors.hasErrors || !values.acceptTermOfUse}

@@ -3,7 +3,7 @@ import { act } from 'react-dom/test-utils';
 import { render, screen } from '@testing-library/react';
 import LoginPage from './index.page';
 
-describe('LoginPage', () => {
+describe('LoginPage (fields/buttons requireds)', () => {
 	beforeEach(() => {
 		act(() => {
 			render(<LoginPage />);

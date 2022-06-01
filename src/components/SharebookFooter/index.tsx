@@ -9,7 +9,7 @@ export function SharebookFooter() {
 	return (
 		<footer className={styles.footer}>
 			<div>
-				<Typography className={styles.text} variant="body3">{`© 2018-${currentYear} Copyleft: sharebook.com.br`}</Typography>
+				<Typography className={styles.text} variant="bodyMedium">{`© 2018-${currentYear} Copyleft: sharebook.com.br`}</Typography>
 				<Link
 					data-testid="vercel-banner-link"
 					href="https://vercel.com/vercel-admin?utm_source=sharebooknext&utm_campaign=oss"

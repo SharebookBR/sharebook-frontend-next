@@ -3,27 +3,47 @@ import * as createPallete from '@mui/material/styles/createPalette';
 
 declare module '@mui/material/styles' {
 	interface TypographyVariants {
-		body3: React.CSSProperties;
-		body4: React.CSSProperties;
-		subtitle3: React.CSSProperties;
-		subtitle4: React.CSSProperties;
+		bodyXLargeBold: React.CSSProperties;
+		bodyLargeBold: React.CSSProperties;
+		bodyMediumBold: React.CSSProperties;
+		bodySmallBold: React.CSSProperties;
+		bodyXLarge: React.CSSProperties;
+		bodyLarge: React.CSSProperties;
+		bodyMedium: React.CSSProperties;
+		bodySmall: React.CSSProperties;
 	}
 
 	// allow configuration using `createTheme`
 	interface TypographyVariantsOptions {
-		body3?: React.CSSProperties;
-		body4?: React.CSSProperties;
-		subtitle3?: React.CSSProperties;
-		subtitle4?: React.CSSProperties;
+		bodyXLargeBold: React.CSSProperties;
+		bodyLargeBold: React.CSSProperties;
+		bodyMediumBold: React.CSSProperties;
+		bodySmallBold: React.CSSProperties;
+		bodyXLarge: React.CSSProperties;
+		bodyLarge: React.CSSProperties;
+		bodyMedium: React.CSSProperties;
+		bodySmall: React.CSSProperties;
 	}
 }
 
 // Update the Typography's variant prop options
 declare module '@mui/material/Typography' {
 	interface TypographyPropsVariantOverrides {
-		body3: true;
-		body4: true;
-		subtitle3: true;
-		subtitle4: true;
+		/* Disable some default variants */
+		body1: false;
+		body2: false;
+		caption: false;
+		subTitle1: false;
+		subTitle2: false;
+
+		/* Enable new custom variants */
+		bodyXLargeBold: true;
+		bodyLargeBold: true;
+		bodyMediumBold: true;
+		bodySmallBold: true;
+		bodyXLarge: true;
+		bodyLarge: true;
+		bodyMedium: true;
+		bodySmall: true;
 	}
 }

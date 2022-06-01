@@ -64,9 +64,11 @@ const Login: NextPage = () => {
 					<Typography variant="body1" className={styles.subTitle}>
 						Interaja com leitores de todo o Brasil e descubra seu novo livro favorito!
 					</Typography>
-					<Button variant="contained" className={styles.button}>
-						Criar minha conta grátis!
-					</Button>
+					<Link href="/register" passHref>
+						<Button variant="contained" className={styles.button}>
+							Criar minha conta grátis!
+						</Button>
+					</Link>
 					<Image src="/login.png" width={610} height={404} alt="Doe e receba livros na Sharebook!" />
 				</Grid>
 

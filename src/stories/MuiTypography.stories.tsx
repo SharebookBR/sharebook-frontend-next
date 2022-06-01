@@ -20,12 +20,7 @@ export default {
 		// https://mui.com/pt/material-ui/api/Typography/
 		variant: {
 			options: [
-				'body1',
-				'body2',
-				'body3',
-				'body4',
 				'button',
-				'caption',
 				'h1',
 				'h2',
 				'h3',
@@ -34,10 +29,14 @@ export default {
 				'h6',
 				'inherit',
 				'overline',
-				'subtitle1',
-				'subtitle2',
-				'subtitle3',
-				'subtitle4'
+				'bodyXLargeBold',
+				'bodyLargeBold',
+				'bodyMediumBold',
+				'bodySmallBold',
+				'bodyXLarge',
+				'bodyLarge',
+				'bodyMedium',
+				'bodySmall'
 			],
 			type: 'string',
 			...controlSelect
@@ -54,7 +53,7 @@ export default {
 		// },
 	},
 	args: {
-		variant: 'body1',
+		variant: 'bodyLarge',
 		paragraph: false,
 		noWrap: false,
 		gutterBottom: false

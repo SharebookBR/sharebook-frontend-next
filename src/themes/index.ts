@@ -5,35 +5,44 @@ import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
 	typography: {
+		/* default values */
 		fontWeightRegular: 400,
 		fontWeightBold: 700,
-		fontSize: 16,
+		fontSize: 14,
 		fontFamily: ['Roboto', 'sans-serif'].join(','),
 		allVariants: {
 			fontFamily: 'Roboto',
 			color: '#282828'
 		},
 		body1: {
-			/* Body XLarge */
+			// body1 is disabled, but, this value interfer in helperText for example
+			fontSize: 14
+		},
+
+		/* Disabled variants */
+		body2: undefined,
+		caption: undefined,
+		subtitle1: undefined,
+		subtitle2: undefined,
+
+		/* New custom variants */
+		bodyXLarge: {
 			fontSize: 24,
 			fontWeight: 400,
 			lineHeight: '33.6px'
 		},
-		body2: {
-			/* Body Large */
+		bodyLarge: {
 			fontSize: 20,
 			fontWeight: 400,
 			lineHeight: '28px',
 			letterSpacing: '0.2px'
 		},
-		body3: {
-			/* Body Medium */
+		bodyMedium: {
 			fontSize: 16,
 			fontWeight: 400,
 			lineHeight: '22.4px'
 		},
-		body4: {
-			/* Body Small */
+		bodySmall: {
 			fontSize: 12,
 			fontWeight: 400,
 			lineHeight: '14.06px'
@@ -43,22 +52,22 @@ const theme = createTheme({
 			fontWeight: 700,
 			fontSize: '1.25rem'
 		},
-		subtitle1: {
+		bodyXLargeBold: {
 			fontSize: 24,
 			fontWeight: 700,
 			lineHeight: '33.6px'
 		},
-		subtitle2: {
+		bodyLargeBold: {
 			fontSize: 20,
 			fontWeight: 700,
 			lineHeight: '28px'
 		},
-		subtitle3: {
+		bodyMediumBold: {
 			fontSize: 16,
 			fontWeight: 700,
 			lineHeight: '22px'
 		},
-		subtitle4: {
+		bodySmallBold: {
 			fontSize: 12,
 			fontWeight: 700,
 			lineHeight: '14px'

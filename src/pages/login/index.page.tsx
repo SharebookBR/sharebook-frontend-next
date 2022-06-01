@@ -61,12 +61,14 @@ const Login: NextPage = () => {
 			<Grid container className={styles.wrapper}>
 				<Grid item xs={7} className={styles.left}>
 					<Typography variant="h4">Doe e receba livros na Sharebook!</Typography>
-					<Typography variant="body1" className={styles.subTitle}>
+					<Typography variant="bodyXLarge" paragraph className={styles.subTitle}>
 						Interaja com leitores de todo o Brasil e descubra seu novo livro favorito!
 					</Typography>
-					<Button variant="contained" className={styles.button}>
-						Criar minha conta grátis!
-					</Button>
+					<Link href="/register" passHref>
+						<Button variant="contained" className={styles.button}>
+							Criar minha conta grátis!
+						</Button>
+					</Link>
 					<Image src="/login.png" width={610} height={404} alt="Doe e receba livros na Sharebook!" />
 				</Grid>
 
@@ -116,7 +118,7 @@ const Login: NextPage = () => {
 						</Typography>
 					)}
 					<div className={styles.registerWrapper}>
-						<Typography variant="body4">
+						<Typography variant="bodySmall">
 							Ainda não tem conta?
 							<Link href="/register" passHref>
 								Crie uma grátis

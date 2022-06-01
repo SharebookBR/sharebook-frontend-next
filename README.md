@@ -33,3 +33,5 @@
 -   **Veja nossas páginas de ajuda no [nosso wiki](https://github.com/SharebookBR/sharebook-frontend-next/wiki)**
 -   Entre no nosso [canal do Slack](https://join.slack.com/t/sharebookworkspace/shared_invite/zt-4fb3uu8m-VPrkhzdI9u3lsOlS1OkVvg)
 -   Abra uma issue [aqui](https://github.com/SharebookBR/sharebook-frontend-next/issues)
+
+[![Power by Vercel](./public/powered-by-vercel.svg)](https://vercel.com/vercel-admin?utm_source=sharebooknext&utm_campaign=oss)

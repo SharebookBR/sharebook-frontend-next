@@ -24,9 +24,10 @@
 
 ## Sugestões de extensões uteis para o projeto
 
--   ESLint
--   Prettier
--   Sass
+-   [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+-   [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+-   [Sass](https://marketplace.visualstudio.com/items?itemName=Syler.sass-indented)
+-   [Jest Runner](https://marketplace.visualstudio.com/items?itemName=firsttris.vscode-jest-runner)
 
 # Não encontrou oque procura?
 

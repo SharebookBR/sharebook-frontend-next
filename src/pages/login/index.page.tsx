@@ -78,6 +78,7 @@ const Login: NextPage = () => {
 						Faça login na Sharebook
 					</Typography>
 					<TextField
+						data-testid="input-email"
 						fullWidth
 						autoFocus
 						value={email}
@@ -91,6 +92,7 @@ const Login: NextPage = () => {
 						onChange={(e) => handleEmail(e.currentTarget.value)}
 					/>
 					<TextField
+						data-testid="input-password"
 						type="password"
 						value={password}
 						fullWidth
@@ -104,6 +106,7 @@ const Login: NextPage = () => {
 						onChange={(e) => handlePassword(e.currentTarget.value)}
 					/>
 					<Button
+						data-testid="button-login"
 						disabled={Boolean(emailError || passwordError || email.length === 0 || password.length === 0)}
 						onClick={handleLogin}
 						fullWidth

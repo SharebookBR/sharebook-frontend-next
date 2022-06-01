@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 
+const ApiUrl = process.env.NEXT_PUBLIC_SHAREBOOK_API ?? 'https://sharebook.com.br/api/';
+
 const nextConfig = {
 	reactStrictMode: true,
 	pageExtensions: ['page.tsx'],
@@ -7,7 +9,7 @@ const nextConfig = {
 		return [
 			{
 				source: '/:path*',
-				destination: `${process.env.NEXT_PUBLIC_SHAREBOOK_API.replace('/api', '')}:path*`
+				destination: `${ApiUrl.replace('/api', '')}:path*`
 			}
 		];
 	}

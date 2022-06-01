@@ -61,7 +61,7 @@ const Login: NextPage = () => {
 			<Grid container className={styles.wrapper}>
 				<Grid item xs={7} className={styles.left}>
 					<Typography variant="h4">Doe e receba livros na Sharebook!</Typography>
-					<Typography variant="bodyXLarge" variantMapping={{ bodyXLarge: 'p' }} className={styles.subTitle}>
+					<Typography variant="bodyXLarge" paragraph className={styles.subTitle}>
 						Interaja com leitores de todo o Brasil e descubra seu novo livro favorito!
 					</Typography>
 					<Link href="/register" passHref>

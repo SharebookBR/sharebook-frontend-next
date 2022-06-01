@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 import Image from 'next/image';
 import React from 'react';
 
@@ -10,7 +10,9 @@ export function SharebookFooter() {
 		<footer className={styles.footer}>
 			<div>
 				<Typography className={styles.text} variant="body3">{`© 2018-${currentYear} Copyleft: sharebook.com.br`}</Typography>
-				<Image src="/powered-by-vercel.svg" width={212} height={45} alt="Powered by vercel" />
+				<Link href="https://vercel.com/vercel-admin?utm_source=sharebooknext&utm_campaign=oss" target="_blank" rel="oopener noreferrer">
+					<Image src="/powered-by-vercel.svg" width={212} height={45} alt="Powered by vercel" />
+				</Link>
 			</div>
 		</footer>
 	);

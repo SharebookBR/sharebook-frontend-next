@@ -53,15 +53,17 @@ const Register: NextPage = () => {
 	const validatePhone = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
-			if (!Utils.PhoneIsValid(value)) {
-				setErrors((currentErrors) => {
-					return { ...currentErrors, hasErrors: true, [name]: 'Telefone inválido!' };
-				});
-			} else if (value.length > 0) {
-				setErrors((currentErrors) => {
-					// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
-					return { ...currentErrors, hasErrors: false, [name]: '' };
-				});
+			if (value.length > 0) {
+				if (!Utils.PhoneIsValid(value)) {
+					setErrors((currentErrors) => {
+						return { ...currentErrors, hasErrors: true, [name]: 'Telefone inválido!' };
+					});
+				} else if (value.length > 0) {
+					setErrors((currentErrors) => {
+						// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
+						return { ...currentErrors, hasErrors: false, [name]: '' };
+					});
+				}
 			}
 		},
 		[setErrors]
@@ -83,15 +85,17 @@ const Register: NextPage = () => {
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			// TODO: Validar Telefone também caso o campo de fato deve permitir ambos (pendente de validação com UX)
 			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
-			if (!Utils.EmailIsValid(value)) {
-				setErrors((currentErrors) => {
-					return { ...currentErrors, hasErrors: true, [name]: 'Email inválido!' };
-				});
-			} else if (value.length > 0) {
-				setErrors((currentErrors) => {
-					// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
-					return { ...currentErrors, hasErrors: false, [name]: '' };
-				});
+			if (value.length > 0) {
+				if (!Utils.EmailIsValid(value)) {
+					setErrors((currentErrors) => {
+						return { ...currentErrors, hasErrors: true, [name]: 'Email inválido!' };
+					});
+				} else if (value.length > 0) {
+					setErrors((currentErrors) => {
+						// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
+						return { ...currentErrors, hasErrors: false, [name]: '' };
+					});
+				}
 			}
 		},
 		[setErrors]
@@ -99,23 +103,25 @@ const Register: NextPage = () => {
 
 	const validatePostalCode = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
-		if (value.length > 0 && !Utils.PostalCodeIsValid(value))
-			setErrors((currentErrors) => {
-				return { ...currentErrors, hasErrors: true, [name]: 'CEP inválido!' };
-			});
-		else {
-			try {
-				const result: IViaCepResponse = await axios.get(`${configs.viaCepUrl}ws/${value}/json`);
-				const { uf: state, localidade: city, complemento: complement, logradouro: address, bairro: neighborhood } = result.data;
-				setValues((currentValues) => {
-					return { ...currentValues, state, city, complement, address, neighborhood };
-				});
+		if (value.length > 0) {
+			if (!Utils.PostalCodeIsValid(value))
 				setErrors((currentErrors) => {
-					// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
-					return { ...currentErrors, hasErrors: false, [name]: '' };
+					return { ...currentErrors, hasErrors: true, [name]: 'CEP inválido!' };
 				});
-			} catch {
-				console.error('Erro ao buscar informações do CEP');
+			else {
+				try {
+					const result: IViaCepResponse = await axios.get(`${configs.viaCepUrl}ws/${value}/json`);
+					const { uf: state, localidade: city, complemento: complement, logradouro: address, bairro: neighborhood } = result.data;
+					setValues((currentValues) => {
+						return { ...currentValues, state, city, complement, address, neighborhood };
+					});
+					setErrors((currentErrors) => {
+						// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
+						return { ...currentErrors, hasErrors: false, [name]: '' };
+					});
+				} catch {
+					console.error('Erro ao buscar informações do CEP');
+				}
 			}
 		}
 	}, []);

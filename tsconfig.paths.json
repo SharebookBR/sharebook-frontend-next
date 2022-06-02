@@ -9,7 +9,8 @@
 			"@sharebook-hooks": ["hooks"],
 			"@sharebook-configs": ["configs"],
 			"@sharebook-axios": ["axios"],
-			"@sharebook-utils": ["utils"]
+			"@sharebook-utils": ["utils"],
+			"@sharebook-enums": ["enums"]
 		}
 	}
 }

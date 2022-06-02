@@ -11,7 +11,8 @@ module.exports = {
 		'^@sharebook-hooks': '<rootDir>/src/hooks',
 		'^@sharebook-configs': '<rootDir>/src/configs',
 		'^@sharebook-axios': '<rootDir>/src/axios',
-		'^@sharebook-utils': '<rootDir>/src/utils'
+		'^@sharebook-utils': '<rootDir>/src/utils',
+		'^@sharebook-enums': '<rootDir>/src/enums'
 	},
 	testEnvironment: 'jest-environment-jsdom'
 };

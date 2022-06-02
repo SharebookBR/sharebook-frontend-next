@@ -12,10 +12,14 @@ import configs from '@sharebook-configs';
 import axios from 'axios';
 import LabelCheck from './LabelCheck';
 import sharebookAxiosClient from '@sharebook-axios';
+import { MaskedInputPhone } from '@sharebook-components';
+
+//TODO: Add loading
 
 const Register: NextPage = () => {
 	const [values, setValues] = useState<IValues>(initialValues);
 	const [errors, setErrors] = useState<IErrors>(initialErrors);
+	const [registerErrors, setRegisterErrors] = useState<string[]>([]);
 
 	const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
@@ -72,18 +76,18 @@ const Register: NextPage = () => {
 	const register = () => {
 		console.log('Register', values);
 		sharebookAxiosClient
-			.post('Account/Register', values)
+			.post('Account/Register', { country: 'Brasil', ...values })
 			.then((res: any) => {
-				console.log('res', res);
+				if (registerErrors?.length > 0) setRegisterErrors([]);
 			})
 			.catch((err: any) => {
-				console.log('err', err);
+				setRegisterErrors(err?.response?.data?.messages || ['Erro ao cadastrar usuário']);
+				console.error('err', err);
 			});
 	};
 
 	const validateEmail = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
-			// TODO: Validar Telefone também caso o campo de fato deve permitir ambos (pendente de validação com UX)
 			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
 			if (value.length > 0) {
 				if (!Utils.EmailIsValid(value)) {
@@ -111,9 +115,9 @@ const Register: NextPage = () => {
 			else {
 				try {
 					const result: IViaCepResponse = await axios.get(`${configs.viaCepUrl}ws/${value}/json`);
-					const { uf: state, localidade: city, complemento: complement, logradouro: address, bairro: neighborhood } = result.data;
+					const { uf: state, localidade: city, complemento: complement, logradouro: street, bairro: neighborhood } = result.data;
 					setValues((currentValues) => {
-						return { ...currentValues, state, city, complement, address, neighborhood };
+						return { ...currentValues, state, city, complement, street, neighborhood };
 					});
 					setErrors((currentErrors) => {
 						// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
@@ -131,6 +135,7 @@ const Register: NextPage = () => {
 			<Grid item xs={2} className={styles.left}>
 				<Image src="/register.png" width={192} height={552} alt="Crie sua conta na Sharebook" />
 			</Grid>
+
 			<Grid item xs={10} className={styles.right}>
 				<Typography>Seja bem vindo.</Typography>
 				<Typography variant="h1" className={styles.title}>
@@ -140,6 +145,7 @@ const Register: NextPage = () => {
 				<Grid container className={styles.containerForm}>
 					<Grid item xs={12} md={6} className={styles.leftForm}>
 						<TextField
+							data-testid="input-name"
 							className={styles.input}
 							name="name"
 							fullWidth
@@ -149,8 +155,11 @@ const Register: NextPage = () => {
 							required
 							onChange={onChange}
 						/>
+
 						<TextField
+							data-testid="input-email"
 							className={styles.input}
+							type="email"
 							name="email"
 							fullWidth
 							label="E-mail"
@@ -162,10 +171,18 @@ const Register: NextPage = () => {
 							error={Boolean(errors.email)}
 							helperText={errors.email}
 						/>
+
 						<TextField
 							className={styles.input}
+							data-testid="input-phone"
 							name="phone"
 							fullWidth
+							InputProps={{
+								inputProps: {
+									showMask: false
+								},
+								inputComponent: MaskedInputPhone
+							}}
 							label="DDD + Telefone"
 							value={values.phone}
 							placeholder="(00) 0 0000-0000"
@@ -175,16 +192,19 @@ const Register: NextPage = () => {
 							error={Boolean(errors.phone)}
 							helperText={errors.phone}
 						/>
+
 						<TextField
+							data-testid="input-street"
 							className={styles.input}
-							name="address"
+							name="street"
 							fullWidth
 							label="Endereço"
-							value={values.address}
+							value={values.street}
 							placeholder="Digite seu endereço"
 							required
 							onChange={onChange}
 						/>
+
 						<TextField
 							className={styles.input}
 							name="complement"
@@ -194,7 +214,9 @@ const Register: NextPage = () => {
 							placeholder="Digite o complemento do endereço"
 							onChange={onChange}
 						/>
+
 						<TextField
+							data-testid="input-city"
 							className={styles.input}
 							name="city"
 							fullWidth
@@ -204,7 +226,9 @@ const Register: NextPage = () => {
 							required
 							onChange={onChange}
 						/>
+
 						<TextField
+							data-testid="input-password"
 							className={styles.input}
 							name="password"
 							fullWidth
@@ -218,7 +242,9 @@ const Register: NextPage = () => {
 							onBlur={(e) => validatePassword(e as React.ChangeEvent<HTMLInputElement>)}
 							onChange={onChange}
 						/>
+
 						<TextField
+							data-testid="input-confirmPassword"
 							className={styles.input}
 							name="confirmPassword"
 							fullWidth
@@ -236,6 +262,7 @@ const Register: NextPage = () => {
 
 					<Grid item xs={12} md={6} className={styles.rightForm}>
 						<TextField
+							data-testid="input-birthDate"
 							className={styles.input}
 							name="birthDate"
 							fullWidth
@@ -245,7 +272,9 @@ const Register: NextPage = () => {
 							required
 							onChange={onChange}
 						/>
+
 						<TextField
+							data-testid="input-postalCode"
 							className={styles.input}
 							name="postalCode"
 							fullWidth
@@ -258,7 +287,9 @@ const Register: NextPage = () => {
 							onChange={onChange}
 							onBlur={(e) => validatePostalCode(e as React.ChangeEvent<HTMLInputElement>)}
 						/>
+
 						<TextField
+							data-testid="input-number"
 							className={styles.input}
 							name="number"
 							fullWidth
@@ -268,7 +299,9 @@ const Register: NextPage = () => {
 							required
 							onChange={onChange}
 						/>
+
 						<TextField
+							data-testid="input-neighborhood"
 							className={styles.input}
 							name="neighborhood"
 							fullWidth
@@ -278,7 +311,9 @@ const Register: NextPage = () => {
 							required
 							onChange={onChange}
 						/>
+
 						<TextField
+							data-testid="input-state"
 							className={styles.input}
 							name="state"
 							fullWidth
@@ -288,6 +323,7 @@ const Register: NextPage = () => {
 							required
 							onChange={onChange}
 						/>
+
 						<FormGroup className={styles.acceptLabels}>
 							<FormControlLabel
 								control={
@@ -296,11 +332,14 @@ const Register: NextPage = () => {
 								label={<LabelCheck label="Aceito receber e-mails e newsletter da Sharebook" />}
 							/>
 							<FormControlLabel
+								data-testid="input-acceptTermOfUse"
 								control={<Checkbox name="acceptTermOfUse" onChange={onChangeCheck} value={values.acceptTermOfUse} />}
 								label={<LabelCheck label="Eu concordo com os Termos de uso" />}
 							/>
 						</FormGroup>
+
 						<Button
+							data-testid="button-register"
 							className={styles.registerButton}
 							fullWidth
 							disabled={errors.hasErrors || !values.acceptTermOfUse}
@@ -309,6 +348,12 @@ const Register: NextPage = () => {
 						>
 							Cadastrar
 						</Button>
+
+						{registerErrors.length > 0 && (
+							<Typography style={{ marginTop: '15px', textAlign: 'center' }} color="error">
+								{registerErrors.join('. ')}
+							</Typography>
+						)}
 
 						<Typography className={styles.login}>
 							Já tem uma conta?

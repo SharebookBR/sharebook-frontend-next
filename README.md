@@ -18,6 +18,11 @@
 
 -   [Veja nossas regras para PR/MR](https://github.com/SharebookBR/sharebook-frontend-next/wiki/Regras-para-novas-contribui%C3%A7%C3%B5es)
 
+-   Dúvidas/dificuldades ? Deixe-me saber!
+    -   Entre no nosso [Slack](https://join.slack.com/t/sharebookworkspace/shared_invite/zt-4fb3uu8m-VPrkhzdI9u3lsOlS1OkVvg) e chame no canal
+        `frontend-next`!
+    -   Envie um email para _henrique_holtz@hotmail.com_
+
 # Como executar a aplicação?
 
 ### [Veja nosso Wiki completo aqui](https://github.com/SharebookBR/sharebook-frontend-next/wiki/Como-executar-a-aplica%C3%A7%C3%A3o%3F) separado por ambientes (Ex: [Windows](https://github.com/SharebookBR/sharebook-frontend-next/wiki/Como-executar-a-aplica%C3%A7%C3%A3o%3F#windows), ou [Windows + Docker + WSL2 (Linux)](https://github.com/SharebookBR/sharebook-frontend-next/wiki/Como-executar-a-aplica%C3%A7%C3%A3o%3F#windows) e outros)

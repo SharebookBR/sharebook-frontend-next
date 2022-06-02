@@ -2,7 +2,7 @@ export interface IRegisterBase {
 	name: string;
 	email: string;
 	phone: string;
-	address: string;
+	street: string;
 	complement?: string;
 	city: string;
 	password: string;

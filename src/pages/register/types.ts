@@ -7,7 +7,7 @@ export interface IRegisterBase {
 	city: string;
 	password: string;
 	confirmPassword: string;
-	birthDate?: Date;
+	birthDate: string;
 	postalCode: string;
 	number: string;
 	neighborhood: string;
@@ -19,9 +19,7 @@ export interface IValues extends IRegisterBase {
 	acceptTermOfUse: boolean;
 }
 
-export interface IErrors extends IRegisterBase {
-	hasErrors: boolean;
-}
+export interface IErrors extends IRegisterBase {}
 
 interface IViaCepData {
 	bairro: string;

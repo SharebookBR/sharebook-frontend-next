@@ -5,6 +5,7 @@ const initialRegisterBase: IRegisterBase = {
 	email: '',
 	phone: '',
 	street: '',
+	birthDate: '',
 	complement: '',
 	city: '',
 	password: '',
@@ -22,6 +23,5 @@ export const initialValues: IValues = {
 };
 
 export const initialErrors: IErrors = {
-	...initialRegisterBase,
-	hasErrors: false
+	...initialRegisterBase
 };

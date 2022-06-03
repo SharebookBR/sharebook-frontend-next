@@ -48,20 +48,27 @@ const Register: NextPage = () => {
 			});
 	}, []);
 
-	const validatePassword = useCallback(
+	const validatePasswords = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
-			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
-			if (!Utils.PasswordIsValid(value)) {
-				setErrors((currentErrors) => {
-					return { ...currentErrors, [name]: 'Senha inválida!' };
-				});
-			} else if (value.length > 0) {
-				setErrors((currentErrors) => {
-					return { ...currentErrors, [name]: '' };
-				});
+			let newCurrentErrorMessage = '';
+			const { name, value: currentValue } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
+			const currentIsPassword = Boolean(name === 'password');
+
+			if (!Utils.PasswordIsValid(currentValue)) {
+				newCurrentErrorMessage = 'Senha inválida! Deve conter entre 6 e 32 caracteres';
+			} else if (currentValue.length > 0) {
+				if (currentIsPassword && values.confirmPassword.length > 0 && values.confirmPassword !== currentValue)
+					newCurrentErrorMessage = 'As senhas devem ser iguais!';
+				else if (!currentIsPassword && values.password.length > 0 && values.password !== currentValue)
+					newCurrentErrorMessage = 'As senhas devem ser iguais!';
 			}
+
+			setErrors((currentErrors) => {
+				if (currentIsPassword) return { ...currentErrors, password: newCurrentErrorMessage, confirmPassword: '' };
+				else return { ...currentErrors, confirmPassword: newCurrentErrorMessage, password: '' };
+			});
 		},
-		[setErrors]
+		[setErrors, values.password, values.confirmPassword]
 	);
 
 	const validatePhone = useCallback(
@@ -265,7 +272,7 @@ const Register: NextPage = () => {
 							required
 							helperText={errors.password}
 							error={Boolean(errors.password)}
-							onBlur={(e) => validatePassword(e as React.ChangeEvent<HTMLInputElement>)}
+							onBlur={(e) => validatePasswords(e as React.ChangeEvent<HTMLInputElement>)}
 							onChange={onChange}
 						/>
 
@@ -281,7 +288,7 @@ const Register: NextPage = () => {
 							required
 							helperText={errors.confirmPassword}
 							error={Boolean(errors.confirmPassword)}
-							onBlur={(e) => validatePassword(e as React.ChangeEvent<HTMLInputElement>)}
+							onBlur={(e) => validatePasswords(e as React.ChangeEvent<HTMLInputElement>)}
 							onChange={onChange}
 						/>
 					</Grid>

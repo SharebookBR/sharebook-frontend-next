@@ -2,8 +2,9 @@ import { InputBaseComponentProps } from '@mui/material';
 import React from 'react';
 import MaskedInput from 'react-text-mask';
 
-export const MaskedInputPhone = (props: InputBaseComponentProps): JSX.Element => {
+export const MaskedInputPhone = React.forwardRef<HTMLInputElement, InputBaseComponentProps>((props, ref): JSX.Element => {
 	const { inputRef, ...others } = props;
+	// ref is without use, but without React.forwardRef() return console.error
 
 	return (
 		<MaskedInput
@@ -14,4 +15,4 @@ export const MaskedInputPhone = (props: InputBaseComponentProps): JSX.Element =>
 			placeholderChar={'\u2000'}
 		/>
 	);
-};
+});

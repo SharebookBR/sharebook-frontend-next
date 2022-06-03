@@ -7,7 +7,7 @@ export interface IRegisterBase {
 	city: string;
 	password: string;
 	confirmPassword: string;
-	birthDate?: Date;
+	birthDate: string;
 	postalCode: string;
 	number: string;
 	neighborhood: string;

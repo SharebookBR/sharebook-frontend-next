@@ -12,9 +12,11 @@ import configs from '@sharebook-configs';
 import axios from 'axios';
 import LabelCheck from './LabelCheck';
 import sharebookAxiosClient from '@sharebook-axios';
-import { MaskedInputPhone } from '@sharebook-components';
+import { MaskedInputDate, MaskedInputPhone } from '@sharebook-components';
+import { EnumDateTypes } from '@sharebook-enums';
 
-//TODO: Add loading
+//TODO:
+// Add loading
 
 const Register: NextPage = () => {
 	const [values, setValues] = useState<IValues>(initialValues);
@@ -61,6 +63,27 @@ const Register: NextPage = () => {
 				if (!Utils.PhoneIsValid(value)) {
 					setErrors((currentErrors) => {
 						return { ...currentErrors, hasErrors: true, [name]: 'Telefone inválido!' };
+					});
+				} else if (value.length > 0) {
+					setErrors((currentErrors) => {
+						// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
+						return { ...currentErrors, hasErrors: false, [name]: '' };
+					});
+				}
+			}
+		},
+		[setErrors]
+	);
+
+	const validateDate = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			// TODO Validate birthDate (don't can is future date)
+			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
+			console.log('validateDate', name, value);
+			if (value.length > 0) {
+				if (!Utils.DateIsValid(value, EnumDateTypes.ddMMyyyy)) {
+					setErrors((currentErrors) => {
+						return { ...currentErrors, hasErrors: true, [name]: 'Data inválida! formato deve ser: dd/MM/yyyy' };
 					});
 				} else if (value.length > 0) {
 					setErrors((currentErrors) => {
@@ -265,12 +288,21 @@ const Register: NextPage = () => {
 							data-testid="input-birthDate"
 							className={styles.input}
 							name="birthDate"
+							InputProps={{
+								inputProps: {
+									showMask: false
+								},
+								inputComponent: MaskedInputDate
+							}}
 							fullWidth
 							label="Data de nascimento"
 							value={values.birthDate}
 							placeholder="01/01/2000"
 							required
 							onChange={onChange}
+							onBlur={(e) => validateDate(e as React.ChangeEvent<HTMLInputElement>)}
+							error={Boolean(errors.birthDate)}
+							helperText={errors.birthDate}
 						/>
 
 						<TextField

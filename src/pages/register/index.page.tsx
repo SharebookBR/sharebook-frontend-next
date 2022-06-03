@@ -32,14 +32,6 @@ const Register: NextPage = () => {
 		if (hasFormErrors !== newHasFormErrors) setHasFormErrors(newHasFormErrors);
 	}, [errors]);
 
-	const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
-		if (name)
-			setValues((currentValues) => {
-				return { ...currentValues, [name]: value };
-			});
-	}, []);
-
 	const onChangeCheck = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, checked } = Utils.GetNameAndCheckedFromHTMLInputElementEvent(e);
 		if (name)
@@ -153,6 +145,31 @@ const Register: NextPage = () => {
 			}
 		},
 		[getInfosFromPostalCode, setErrors]
+	);
+
+	const onChange = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
+			if (name) {
+				setValues((currentValues) => {
+					return { ...currentValues, [name]: value };
+				});
+
+				if (value.length > 0 && Object.keys(errors).find((key) => key === name)) {
+					switch (name) {
+						case 'email':
+							if (errors.email) validateEmail(e);
+						case 'postalCode':
+							if (errors.postalCode) validatePostalCode(e);
+						case 'phone':
+							if (errors.phone) validatePhone(e);
+						case 'birthDate':
+							if (errors.birthDate) validateDate(e);
+					}
+				}
+			}
+		},
+		[setValues, errors, validateEmail, validatePostalCode, validatePhone, validateDate]
 	);
 
 	return (

@@ -12,7 +12,7 @@ import configs from '@sharebook-configs';
 import axios from 'axios';
 import LabelCheck from './LabelCheck';
 import sharebookAxiosClient from '@sharebook-axios';
-import { MaskedInputDate, MaskedInputPhone } from '@sharebook-components';
+import { MaskedInputDate, MaskedInputPhone, MaskedInputPostalCode } from '@sharebook-components';
 import { EnumDateTypes } from '@sharebook-enums';
 
 //TODO:
@@ -314,6 +314,12 @@ const Register: NextPage = () => {
 							name="postalCode"
 							fullWidth
 							label="CEP"
+							InputProps={{
+								inputProps: {
+									showMask: false
+								},
+								inputComponent: MaskedInputPostalCode
+							}}
 							value={values.postalCode}
 							placeholder="00000-000"
 							error={Boolean(errors.postalCode)}

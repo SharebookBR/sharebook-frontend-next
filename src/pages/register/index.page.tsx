@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import type { NextPage } from 'next';
 import { Button, Checkbox, FormControlLabel, FormGroup, Grid, TextField, Typography } from '@mui/material';
 
@@ -20,8 +20,17 @@ import { EnumDateTypes } from '@sharebook-enums';
 
 const Register: NextPage = () => {
 	const [values, setValues] = useState<IValues>(initialValues);
+	const [hasFormErrors, setHasFormErrors] = useState(false);
 	const [errors, setErrors] = useState<IErrors>(initialErrors);
 	const [registerErrors, setRegisterErrors] = useState<string[]>([]);
+
+	useEffect(() => {
+		let newHasFormErrors = false;
+		Object.values(errors).map((error) => {
+			if (Boolean(error)) newHasFormErrors = true;
+		});
+		if (hasFormErrors !== newHasFormErrors) setHasFormErrors(newHasFormErrors);
+	}, [errors]);
 
 	const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
@@ -44,12 +53,11 @@ const Register: NextPage = () => {
 			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
 			if (!Utils.PasswordIsValid(value)) {
 				setErrors((currentErrors) => {
-					return { ...currentErrors, hasErrors: true, [name]: 'Senha inválida!' };
+					return { ...currentErrors, [name]: 'Senha inválida!' };
 				});
 			} else if (value.length > 0) {
 				setErrors((currentErrors) => {
-					// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
-					return { ...currentErrors, hasErrors: false, [name]: '' };
+					return { ...currentErrors, [name]: '' };
 				});
 			}
 		},
@@ -62,12 +70,11 @@ const Register: NextPage = () => {
 			if (value.length > 0) {
 				if (!Utils.PhoneIsValid(value)) {
 					setErrors((currentErrors) => {
-						return { ...currentErrors, hasErrors: true, [name]: 'Telefone inválido!' };
+						return { ...currentErrors, [name]: 'Telefone inválido!' };
 					});
 				} else if (value.length > 0) {
 					setErrors((currentErrors) => {
-						// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
-						return { ...currentErrors, hasErrors: false, [name]: '' };
+						return { ...currentErrors, [name]: '' };
 					});
 				}
 			}
@@ -79,16 +86,14 @@ const Register: NextPage = () => {
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			// TODO Validate birthDate (don't can is future date)
 			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
-			console.log('validateDate', name, value);
 			if (value.length > 0) {
 				if (!Utils.DateIsValid(value, EnumDateTypes.ddMMyyyy)) {
 					setErrors((currentErrors) => {
-						return { ...currentErrors, hasErrors: true, [name]: 'Data inválida! formato deve ser: dd/MM/yyyy' };
+						return { ...currentErrors, [name]: 'Data inválida! formato deve ser: dd/MM/yyyy' };
 					});
 				} else if (value.length > 0) {
 					setErrors((currentErrors) => {
-						// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
-						return { ...currentErrors, hasErrors: false, [name]: '' };
+						return { ...currentErrors, [name]: '' };
 					});
 				}
 			}
@@ -115,12 +120,11 @@ const Register: NextPage = () => {
 			if (value.length > 0) {
 				if (!Utils.EmailIsValid(value)) {
 					setErrors((currentErrors) => {
-						return { ...currentErrors, hasErrors: true, [name]: 'Email inválido!' };
+						return { ...currentErrors, [name]: 'Email inválido!' };
 					});
 				} else if (value.length > 0) {
 					setErrors((currentErrors) => {
-						// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
-						return { ...currentErrors, hasErrors: false, [name]: '' };
+						return { ...currentErrors, [name]: '' };
 					});
 				}
 			}
@@ -133,7 +137,7 @@ const Register: NextPage = () => {
 		if (value.length > 0) {
 			if (!Utils.PostalCodeIsValid(value))
 				setErrors((currentErrors) => {
-					return { ...currentErrors, hasErrors: true, [name]: 'CEP inválido!' };
+					return { ...currentErrors, [name]: 'CEP inválido!' };
 				});
 			else {
 				try {
@@ -143,8 +147,7 @@ const Register: NextPage = () => {
 						return { ...currentValues, state, city, complement, street, neighborhood };
 					});
 					setErrors((currentErrors) => {
-						// TODO: não colocar fixo "hasErrors: false" pois pode existir outros erros no formulário.
-						return { ...currentErrors, hasErrors: false, [name]: '' };
+						return { ...currentErrors, [name]: '' };
 					});
 				} catch {
 					console.error('Erro ao buscar informações do CEP');
@@ -374,7 +377,7 @@ const Register: NextPage = () => {
 							data-testid="button-register"
 							className={styles.registerButton}
 							fullWidth
-							disabled={errors.hasErrors || !values.acceptTermOfUse}
+							disabled={hasFormErrors || !values.acceptTermOfUse}
 							variant="contained"
 							onClick={() => register()}
 						>

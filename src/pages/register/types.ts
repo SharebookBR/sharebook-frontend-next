@@ -19,9 +19,7 @@ export interface IValues extends IRegisterBase {
 	acceptTermOfUse: boolean;
 }
 
-export interface IErrors extends IRegisterBase {
-	hasErrors: boolean;
-}
+export interface IErrors extends IRegisterBase {}
 
 interface IViaCepData {
 	bairro: string;

@@ -53,14 +53,12 @@ const Register: NextPage = () => {
 			let newCurrentErrorMessage = '';
 			const { name, value: currentValue } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
 			const currentIsPassword = Boolean(name === 'password');
+			const anotherName = currentIsPassword ? 'confirmPassword' : 'password';
 
 			if (!Utils.PasswordIsValid(currentValue)) {
 				newCurrentErrorMessage = 'Senha inválida! Deve conter entre 6 e 32 caracteres';
 			} else if (currentValue.length > 0) {
-				if (currentIsPassword && values.confirmPassword.length > 0 && values.confirmPassword !== currentValue)
-					newCurrentErrorMessage = 'As senhas devem ser iguais!';
-				else if (!currentIsPassword && values.password.length > 0 && values.password !== currentValue)
-					newCurrentErrorMessage = 'As senhas devem ser iguais!';
+				if (values[anotherName].length > 0 && values[anotherName] !== currentValue) newCurrentErrorMessage = 'As senhas devem ser iguais!';
 			}
 
 			setErrors((currentErrors) => {
@@ -68,6 +66,7 @@ const Register: NextPage = () => {
 				else return { ...currentErrors, confirmPassword: newCurrentErrorMessage, password: '' };
 			});
 		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 		[setErrors, values.password, values.confirmPassword]
 	);
 
@@ -75,15 +74,12 @@ const Register: NextPage = () => {
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
 			if (value.length > 0) {
-				if (!Utils.PhoneIsValid(value)) {
-					setErrors((currentErrors) => {
-						return { ...currentErrors, [name]: 'Telefone inválido!' };
-					});
-				} else if (value.length > 0) {
-					setErrors((currentErrors) => {
-						return { ...currentErrors, [name]: '' };
-					});
-				}
+				let newErrorMessage = '';
+				if (!Utils.PhoneIsValid(value)) newErrorMessage = 'Telefone inválido!';
+
+				setErrors((currentErrors) => {
+					return { ...currentErrors, [name]: newErrorMessage };
+				});
 			}
 		},
 		[setErrors]
@@ -94,15 +90,12 @@ const Register: NextPage = () => {
 			// TODO Validate birthDate (don't can is future date)
 			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
 			if (value.length > 0) {
-				if (!Utils.DateIsValid(value, EnumDateTypes.ddMMyyyy)) {
-					setErrors((currentErrors) => {
-						return { ...currentErrors, [name]: 'Data inválida! formato deve ser: dd/MM/yyyy' };
-					});
-				} else if (value.length > 0) {
-					setErrors((currentErrors) => {
-						return { ...currentErrors, [name]: '' };
-					});
-				}
+				let newErrorMessage = '';
+				if (!Utils.DateIsValid(value, EnumDateTypes.ddMMyyyy)) newErrorMessage = 'Data inválida! formato deve ser: dd/MM/yyyy';
+
+				setErrors((currentErrors) => {
+					return { ...currentErrors, [name]: newErrorMessage };
+				});
 			}
 		},
 		[setErrors]
@@ -125,15 +118,12 @@ const Register: NextPage = () => {
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
 			if (value.length > 0) {
-				if (!Utils.EmailIsValid(value)) {
-					setErrors((currentErrors) => {
-						return { ...currentErrors, [name]: 'Email inválido!' };
-					});
-				} else if (value.length > 0) {
-					setErrors((currentErrors) => {
-						return { ...currentErrors, [name]: '' };
-					});
-				}
+				let newErrorMessage = '';
+				if (!Utils.EmailIsValid(value)) newErrorMessage = 'Email inválido!';
+
+				setErrors((currentErrors) => {
+					return { ...currentErrors, [name]: newErrorMessage };
+				});
 			}
 		},
 		[setErrors]
@@ -142,10 +132,8 @@ const Register: NextPage = () => {
 	const validatePostalCode = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
 		if (value.length > 0) {
-			if (!Utils.PostalCodeIsValid(value))
-				setErrors((currentErrors) => {
-					return { ...currentErrors, [name]: 'CEP inválido!' };
-				});
+			let newErrorMessage = '';
+			if (!Utils.PostalCodeIsValid(value)) newErrorMessage = 'CEP inválido!';
 			else {
 				try {
 					const result: IViaCepResponse = await axios.get(`${configs.viaCepUrl}ws/${value}/json`);
@@ -153,13 +141,13 @@ const Register: NextPage = () => {
 					setValues((currentValues) => {
 						return { ...currentValues, state, city, complement, street, neighborhood };
 					});
-					setErrors((currentErrors) => {
-						return { ...currentErrors, [name]: '' };
-					});
 				} catch {
 					console.error('Erro ao buscar informações do CEP');
 				}
 			}
+			setErrors((currentErrors) => {
+				return { ...currentErrors, [name]: newErrorMessage };
+			});
 		}
 	}, []);
 

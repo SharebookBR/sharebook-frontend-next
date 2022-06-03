@@ -129,27 +129,31 @@ const Register: NextPage = () => {
 		[setErrors]
 	);
 
-	const validatePostalCode = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
-		if (value.length > 0) {
-			let newErrorMessage = '';
-			if (!Utils.PostalCodeIsValid(value)) newErrorMessage = 'CEP inválido!';
-			else {
-				try {
-					const result: IViaCepResponse = await axios.get(`${configs.viaCepUrl}ws/${value}/json`);
-					const { uf: state, localidade: city, complemento: complement, logradouro: street, bairro: neighborhood } = result.data;
-					setValues((currentValues) => {
-						return { ...currentValues, state, city, complement, street, neighborhood };
-					});
-				} catch {
-					console.error('Erro ao buscar informações do CEP');
-				}
-			}
-			setErrors((currentErrors) => {
-				return { ...currentErrors, [name]: newErrorMessage };
+	const getInfosFromPostalCode = useCallback(
+		async (postalCode: string) => {
+			const result: IViaCepResponse = await axios.get(`${configs.viaCepUrl}ws/${postalCode}/json`);
+			const { uf: state, localidade: city, complemento: complement, logradouro: street, bairro: neighborhood } = result.data;
+			setValues((currentValues) => {
+				return { ...currentValues, state, city, complement, street, neighborhood };
 			});
-		}
-	}, []);
+		},
+		[setValues]
+	);
+
+	const validatePostalCode = useCallback(
+		async (e: React.ChangeEvent<HTMLInputElement>) => {
+			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
+			if (value.length > 0) {
+				let newErrorMessage = '';
+				if (!Utils.PostalCodeIsValid(value)) newErrorMessage = 'CEP inválido!';
+				else await getInfosFromPostalCode(value).catch(() => console.error('Erro ao buscar informações do CEP'));
+				setErrors((currentErrors) => {
+					return { ...currentErrors, [name]: newErrorMessage };
+				});
+			}
+		},
+		[getInfosFromPostalCode, setErrors]
+	);
 
 	return (
 		<Grid container className={styles.container}>

@@ -236,37 +236,24 @@ const Register: NextPage = () => {
 						/>
 
 						<TextField
-							data-testid="input-street"
+							data-testid="input-birthDate"
 							className={styles.input}
-							name="street"
+							name="birthDate"
+							InputProps={{
+								inputProps: {
+									showMask: false
+								},
+								inputComponent: MaskedInputDate
+							}}
 							fullWidth
-							label="Endereço"
-							value={values.street}
-							placeholder="Digite seu endereço"
+							label="Data de nascimento"
+							value={values.birthDate}
+							placeholder="01/01/2000"
 							required
 							onChange={onChange}
-						/>
-
-						<TextField
-							className={styles.input}
-							name="complement"
-							fullWidth
-							label="Complemento"
-							value={values.complement}
-							placeholder="Digite o complemento do endereço"
-							onChange={onChange}
-						/>
-
-						<TextField
-							data-testid="input-city"
-							className={styles.input}
-							name="city"
-							fullWidth
-							label="Cidade"
-							value={values.city}
-							placeholder="Digite sua cidade"
-							required
-							onChange={onChange}
+							onBlur={(e) => validateDate(e as React.ChangeEvent<HTMLInputElement>)}
+							error={Boolean(errors.birthDate)}
+							helperText={errors.birthDate}
 						/>
 
 						<TextField
@@ -300,30 +287,23 @@ const Register: NextPage = () => {
 							onBlur={(e) => validatePasswords(e as React.ChangeEvent<HTMLInputElement>)}
 							onChange={onChange}
 						/>
+
+						<FormGroup className={styles.acceptLabels}>
+							<FormControlLabel
+								control={
+									<Checkbox name="allowSendingEmail" defaultChecked onChange={onChangeCheck} value={values.allowSendingEmail} />
+								}
+								label={<LabelCheck label="Aceito receber e-mails e newsletter da Sharebook" />}
+							/>
+							<FormControlLabel
+								data-testid="input-acceptTermOfUse"
+								control={<Checkbox name="acceptTermOfUse" onChange={onChangeCheck} value={values.acceptTermOfUse} />}
+								label={<LabelCheck label="Eu concordo com os Termos de uso" />}
+							/>
+						</FormGroup>
 					</Grid>
 
 					<Grid item xs={12} md={6} className={styles.rightForm}>
-						<TextField
-							data-testid="input-birthDate"
-							className={styles.input}
-							name="birthDate"
-							InputProps={{
-								inputProps: {
-									showMask: false
-								},
-								inputComponent: MaskedInputDate
-							}}
-							fullWidth
-							label="Data de nascimento"
-							value={values.birthDate}
-							placeholder="01/01/2000"
-							required
-							onChange={onChange}
-							onBlur={(e) => validateDate(e as React.ChangeEvent<HTMLInputElement>)}
-							error={Boolean(errors.birthDate)}
-							helperText={errors.birthDate}
-						/>
-
 						<TextField
 							data-testid="input-postalCode"
 							className={styles.input}
@@ -346,6 +326,18 @@ const Register: NextPage = () => {
 						/>
 
 						<TextField
+							data-testid="input-street"
+							className={styles.input}
+							name="street"
+							fullWidth
+							label="Endereço"
+							value={values.street}
+							placeholder="Digite seu endereço"
+							required
+							onChange={onChange}
+						/>
+
+						<TextField
 							data-testid="input-number"
 							className={styles.input}
 							name="number"
@@ -353,6 +345,28 @@ const Register: NextPage = () => {
 							label="Número"
 							value={values.number}
 							placeholder="Número do seu endereço"
+							required
+							onChange={onChange}
+						/>
+
+						<TextField
+							className={styles.input}
+							name="complement"
+							fullWidth
+							label="Complemento"
+							value={values.complement}
+							placeholder="Digite o complemento do endereço"
+							onChange={onChange}
+						/>
+
+						<TextField
+							data-testid="input-city"
+							className={styles.input}
+							name="city"
+							fullWidth
+							label="Cidade"
+							value={values.city}
+							placeholder="Digite sua cidade"
 							required
 							onChange={onChange}
 						/>
@@ -380,20 +394,6 @@ const Register: NextPage = () => {
 							required
 							onChange={onChange}
 						/>
-
-						<FormGroup className={styles.acceptLabels}>
-							<FormControlLabel
-								control={
-									<Checkbox name="allowSendingEmail" defaultChecked onChange={onChangeCheck} value={values.allowSendingEmail} />
-								}
-								label={<LabelCheck label="Aceito receber e-mails e newsletter da Sharebook" />}
-							/>
-							<FormControlLabel
-								data-testid="input-acceptTermOfUse"
-								control={<Checkbox name="acceptTermOfUse" onChange={onChangeCheck} value={values.acceptTermOfUse} />}
-								label={<LabelCheck label="Eu concordo com os Termos de uso" />}
-							/>
-						</FormGroup>
 
 						<Button
 							data-testid="button-register"

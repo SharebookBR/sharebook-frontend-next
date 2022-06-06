@@ -11,7 +11,7 @@ export function SharebookNavBar() {
 	const { authContext, logout } = useAuthContext();
 
 	const theme = useTheme();
-	const mobileMatch = useMediaQuery(theme.breakpoints.down('sm'));
+	const mdMatch = useMediaQuery(theme.breakpoints.down('md'));
 
 	const MenuItems = () => {
 		return (
@@ -41,7 +41,7 @@ export function SharebookNavBar() {
 		);
 	};
 
-	if (mobileMatch)
+	if (mdMatch)
 		return (
 			<SharebookNavBarMobile>
 				<MenuItems />

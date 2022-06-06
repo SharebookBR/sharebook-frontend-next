@@ -7,9 +7,16 @@ interface SharebookNavBarItemProps {
 	children: ReactNode;
 }
 
-export function SharebookNavBarItem({ path, children }: SharebookNavBarItemProps) {
+export default function SharebookNavBarItem({ path, children }: SharebookNavBarItemProps) {
 	return (
-		<ListItem>
+		<ListItem
+			sx={{
+				justifyContent: {
+					sm: 'center',
+					xs: 'center'
+				}
+			}}
+		>
 			<Link href={path} passHref>
 				{children}
 			</Link>

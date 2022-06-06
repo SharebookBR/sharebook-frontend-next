@@ -118,7 +118,8 @@ const theme = createTheme({
 		MuiAppBar: {
 			styleOverrides: {
 				root: {
-					backgroundColor: '#FCFCFC'
+					backgroundColor: '#FCFCFC',
+					boxShadow: 'none'
 				}
 			}
 		},

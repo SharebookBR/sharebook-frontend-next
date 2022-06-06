@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Button, Grid, TextField, Typography } from '@mui/material';
+import { Button, Grid, TextField, Typography, useMediaQuery, useTheme, styled } from '@mui/material';
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import Utils from '@sharebook-utils';
@@ -15,6 +15,11 @@ import Link from 'next/link';
 		- login without reload ("window.location.href = window.location.origin;")
 */
 
+const GridWrapper = styled(Grid)(() => ({
+	padding: '6.25rem 10rem',
+	display: 'flex'
+}));
+
 const Login: NextPage = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -22,6 +27,10 @@ const Login: NextPage = () => {
 	const [passwordError, setPasswordError] = useState('');
 	const [loginError, setLoginError] = useState(false);
 	const { authContext, login } = useAuthContext();
+
+	const theme = useTheme();
+	const lgMatch = useMediaQuery(theme.breakpoints.down('lg'));
+
 	if (authContext.authenticated) window.location.href = window.location.origin; //go to home
 
 	const validateEmail = useCallback(() => {
@@ -58,19 +67,26 @@ const Login: NextPage = () => {
 
 	return (
 		<>
-			<Grid container className={styles.wrapper}>
-				<Grid item xs={7} className={styles.left}>
-					<Typography variant="h4">Doe e receba livros na Sharebook!</Typography>
-					<Typography variant="bodyXLarge" paragraph className={styles.subTitle}>
-						Interaja com leitores de todo o Brasil e descubra seu novo livro favorito!
-					</Typography>
-					<Link href="/register" passHref>
-						<Button variant="contained" className={styles.button}>
-							Criar minha conta grátis!
-						</Button>
-					</Link>
-					<Image src="/login.png" width={610} height={404} alt="Doe e receba livros na Sharebook!" />
-				</Grid>
+			<GridWrapper
+				sx={{
+					justifyContent: 'center'
+				}}
+				container
+			>
+				{!lgMatch && (
+					<Grid item xs={7} className={styles.left}>
+						<Typography variant="h4">Doe e receba livros na Sharebook!</Typography>
+						<Typography variant="bodyXLarge" paragraph className={styles.subTitle}>
+							Interaja com leitores de todo o Brasil e descubra seu novo livro favorito!
+						</Typography>
+						<Link href="/register" passHref>
+							<Button variant="contained" className={styles.button}>
+								Criar minha conta grátis!
+							</Button>
+						</Link>
+						<Image src="/login.png" width={610} height={404} alt="Doe e receba livros na Sharebook!" />
+					</Grid>
+				)}
 
 				<Grid item xs={5} className={styles.right}>
 					<Typography>Boas vindas</Typography>
@@ -130,7 +146,7 @@ const Login: NextPage = () => {
 						</Typography>
 					</div>
 				</Grid>
-			</Grid>
+			</GridWrapper>
 		</>
 	);
 };

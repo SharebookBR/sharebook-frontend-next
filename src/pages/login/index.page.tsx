@@ -29,7 +29,7 @@ const Login: NextPage = () => {
 	const { authContext, login } = useAuthContext();
 
 	const theme = useTheme();
-	const mdMatch = useMediaQuery(theme.breakpoints.down('md'));
+	const lgMatch = useMediaQuery(theme.breakpoints.down('lg'));
 
 	if (authContext.authenticated) window.location.href = window.location.origin; //go to home
 
@@ -73,7 +73,7 @@ const Login: NextPage = () => {
 				}}
 				container
 			>
-				{!mdMatch && (
+				{!lgMatch && (
 					<Grid item xs={7} className={styles.left}>
 						<Typography variant="h4">Doe e receba livros na Sharebook!</Typography>
 						<Typography variant="bodyXLarge" paragraph className={styles.subTitle}>

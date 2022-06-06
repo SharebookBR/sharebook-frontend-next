@@ -1,63 +1,58 @@
-.wrapper {
-	padding: 6.25rem 10rem;
-	display: flex;
+.left {
+	h4,
+	p {
+		position: absolute;
+		max-width: 27.56rem;
+		z-index: 1;
+		color: #fff;
+		margin: 4.5rem 0 1.65rem 5.62rem;
+	}
+	.subTitle {
+		margin-top: 12rem;
+	}
+	.button {
+		position: absolute;
+		padding: 0 8px;
+		height: 36px;
+		border-radius: 1.25rem;
+		margin: 17.87rem 0 0 24.3rem;
+		z-index: 1;
+		font-size: 0.75rem;
+		font-weight: 600;
+		line-height: 140%;
+		color: #0e2c50;
+		background-color: #fff;
+		flex: none;
+		order: 0;
+		flex-grow: 0;
+	}
+}
 
-	.left {
-		h4,
-		p {
-			position: absolute;
-			max-width: 27.56rem;
-			z-index: 1;
-			color: #fff;
-			margin: 4.5rem 0 1.65rem 5.62rem;
-		}
-		.subTitle {
-			margin-top: 12rem;
-		}
-		.button {
-			position: absolute;
-			padding: 0 8px;
-			height: 36px;
-			border-radius: 1.25rem;
-			margin: 17.87rem 0 0 24.3rem;
-			z-index: 1;
-			font-size: 0.75rem;
-			font-weight: 600;
-			line-height: 140%;
-			color: #0e2c50;
-			background-color: #fff;
-			flex: none;
-			order: 0;
-			flex-grow: 0;
-		}
+.right {
+	max-width: 21.37rem;
+	.title {
+		width: 26.31rem;
 	}
 
-	.right {
-		max-width: 21.37rem;
-		.title {
-			width: 26.31rem;
-		}
+	.loginButton {
+		margin-top: 1.5rem;
+	}
 
-		.loginButton {
-			margin-top: 1.5rem;
-		}
+	.input {
+		margin-top: 1.5rem;
+	}
 
-		.input {
-			margin-top: 1.5rem;
-		}
+	.loginError {
+		margin-top: 0.5rem;
+	}
 
-		.loginError {
-			margin-top: 0.5rem;
-		}
+	.registerWrapper {
+		margin-top: 1.3rem;
+		width: 100%;
+		text-align: center;
 
-		.registerWrapper {
-			margin-top: 1.3rem;
-			width: 100%;
-			text-align: center;
-
-			a {
-				padding-left: 4px;
-			}
+		a {
+			padding-left: 4px;
 		}
 	}
 }

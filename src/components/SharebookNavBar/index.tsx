@@ -1,53 +1,60 @@
-import { AppBar, Button, List, ListItem, Toolbar, Typography } from '@mui/material';
+import { AppBar, Button, List, ListItem, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import React from 'react';
-import { SharebookNavBarItem } from './item';
+import SharebookNavBarItem from './SharebookNavBarItem';
+import SharebookNavBarItemText from './SharebookNavBarItemText';
 import styles from './styles.module.scss';
 import { useAuthContext } from '@sharebook-hooks';
 import Image from 'next/image';
-
-interface ISharebookNavBarItemText {
-	text: string;
-	path: string;
-}
-
-const SharebookNavBarItemText = ({ text, path }: ISharebookNavBarItemText) => {
-	return (
-		<SharebookNavBarItem path={path}>
-			<Typography variant="bodyMediumBold" color="secondary">
-				{text}
-			</Typography>
-		</SharebookNavBarItem>
-	);
-};
+import SharebookNavBarMobile from './SharebookNavBarMobile';
+import SharebookNavBarLogo from './SharebookNavBarLogo';
 
 export function SharebookNavBar() {
 	const { authContext, logout } = useAuthContext();
 
+	const theme = useTheme();
+	const mdMatch = useMediaQuery(theme.breakpoints.down('md'));
+
+	const MenuItems = () => {
+		return (
+			<>
+				<SharebookNavBarItemText text="Início" path="/" />
+				<SharebookNavBarItem path="/livros/doar">
+					<Button className={styles.donateButton} variant="contained" onClick={() => console.log('x')}>
+						Doar um livro
+						<Image src="/mini-book.png" width={35} height={18} alt="Doar um livro" />
+					</Button>
+				</SharebookNavBarItem>
+				<SharebookNavBarItemText text="Apoie o projeto" path="/apoie-projeto" />
+				<SharebookNavBarItemText text="Quem somos" path="/quem-somos" />
+				<SharebookNavBarItemText text="Fale conosco" path="/contact-us" />
+				{authContext.authenticated ? (
+					<>
+						{authContext.profile === 'User' && <SharebookNavBarItemText text="Meu Painel" path="/panel" />}
+						<ListItem>
+							<Typography variant="bodyMediumBold">{authContext.name}</Typography>
+						</ListItem>
+						<Button onClick={() => logout()}>Logout</Button>
+					</>
+				) : (
+					<SharebookNavBarItemText text="Login" path="/login" />
+				)}
+			</>
+		);
+	};
+
+	if (mdMatch)
+		return (
+			<SharebookNavBarMobile>
+				<MenuItems />
+			</SharebookNavBarMobile>
+		);
+
 	return (
-		<AppBar position="sticky" color="default" className={styles.appBar}>
+		<AppBar sx={{ padding: '15px 10vw' }} position="sticky" color="default">
 			<Toolbar>
+				<SharebookNavBarLogo />
 				<List className={styles.list}>
-					<SharebookNavBarItemText text="Início" path="/" />
-					<SharebookNavBarItem path="/livros/doar">
-						<Button className={styles.donateButton} variant="contained" onClick={() => console.log('x')}>
-							Doar um livro
-							<Image src="/mini-book.png" width={35} height={18} alt="Doar um livro" />
-						</Button>
-					</SharebookNavBarItem>
-					<SharebookNavBarItemText text="Apoie o projeto" path="/apoie-projeto" />
-					<SharebookNavBarItemText text="Quem somos" path="/quem-somos" />
-					<SharebookNavBarItemText text="Fale conosco" path="/contact-us" />
-					{authContext.authenticated ? (
-						<>
-							{authContext.profile === 'User' && <SharebookNavBarItemText text="Meu Painel" path="/panel" />}
-							<ListItem>
-								<Typography variant="bodyMediumBold">{authContext.name}</Typography>
-							</ListItem>
-							<Button onClick={() => logout()}>Logout</Button>
-						</>
-					) : (
-						<SharebookNavBarItemText text="Login" path="/login" />
-					)}
+					<MenuItems />
 				</List>
 			</Toolbar>
 		</AppBar>

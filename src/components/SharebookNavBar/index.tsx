@@ -6,6 +6,7 @@ import styles from './styles.module.scss';
 import { useAuthContext } from '@sharebook-hooks';
 import Image from 'next/image';
 import SharebookNavBarMobile from './SharebookNavBarMobile';
+import SharebookNavBarLogo from './SharebookNavBarLogo';
 
 export function SharebookNavBar() {
 	const { authContext, logout } = useAuthContext();
@@ -49,8 +50,9 @@ export function SharebookNavBar() {
 		);
 
 	return (
-		<AppBar sx={{ padding: '0 10vw' }} position="sticky" color="default">
+		<AppBar sx={{ padding: '15px 10vw' }} position="sticky" color="default">
 			<Toolbar>
+				<SharebookNavBarLogo />
 				<List className={styles.list}>
 					<MenuItems />
 				</List>

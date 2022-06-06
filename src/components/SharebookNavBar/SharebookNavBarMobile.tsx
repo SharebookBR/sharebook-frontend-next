@@ -1,9 +1,7 @@
 import { Button, Menu, styled } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import React, { ReactNode, useState } from 'react';
-import Image from 'next/image';
-
-import styles from './styles.module.scss';
+import SharebookNavBarLogo from './SharebookNavBarLogo';
 
 interface ISharebookNavBarMobileProps {
 	children: ReactNode;
@@ -29,7 +27,7 @@ export default function SharebookNavBarMobile({ children }: ISharebookNavBarMobi
 
 	return (
 		<DivFlex>
-			<Image src="/logo.png" width={228} height={87} alt="Logo da Sharebook" />
+			<SharebookNavBarLogo />
 			<Button sx={{}} aria-expanded={open ? 'true' : undefined} onClick={handleClick}>
 				<MenuIcon fontSize="large" />
 			</Button>

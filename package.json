@@ -6,6 +6,7 @@
 		"dev": "next dev",
 		"dev-docker": "docker-compose -f docker-compose.dev.yml up",
 		"build": "next build",
+		"build-start": "next build && next start",
 		"start": "next start",
 		"lint": "next lint",
 		"storybook": "start-storybook -p 6006",

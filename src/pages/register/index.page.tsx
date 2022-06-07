@@ -159,12 +159,16 @@ const Register: NextPage = () => {
 					switch (name) {
 						case 'email':
 							if (errors.email) validateEmail(e);
+							break;
 						case 'postalCode':
 							if (errors.postalCode) validatePostalCode(e);
+							break;
 						case 'phone':
 							if (errors.phone) validatePhone(e);
+							break;
 						case 'birthDate':
 							if (errors.birthDate) validateDate(e);
+							break;
 					}
 				}
 			}

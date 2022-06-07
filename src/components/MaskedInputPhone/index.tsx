@@ -8,7 +8,6 @@ export const MaskedInputPhone = React.forwardRef<HTMLInputElement, InputBaseComp
 
 	return (
 		<MaskedInput
-			className="MuiOutlinedInput-input MuiInputBase-input css-1lkr5rz-MuiInputBase-input-MuiOutlinedInput-input"
 			{...others}
 			ref={inputRef}
 			mask={['(', /[1-9]/, /\d/, ')', ' ', /\d/, ' ', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}

@@ -7,13 +7,7 @@ export const MaskedInputDate = React.forwardRef<HTMLInputElement, InputBaseCompo
 	// ref is without use, but without React.forwardRef() return console.error
 	return (
 		<div>
-			<MaskedInput
-				{...others}
-				className="MuiOutlinedInput-input MuiInputBase-input css-1lkr5rz-MuiInputBase-input-MuiOutlinedInput-input"
-				ref={inputRef}
-				mask={[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]}
-				placeholderChar={'\u2000'}
-			/>
+			<MaskedInput {...others} ref={inputRef} mask={[/\d/, /\d/, '/', /\d/, /\d/, '/', /\d/, /\d/, /\d/, /\d/]} placeholderChar={'\u2000'} />
 		</div>
 	);
 });

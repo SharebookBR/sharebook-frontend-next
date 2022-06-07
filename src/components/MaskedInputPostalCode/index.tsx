@@ -6,13 +6,5 @@ export const MaskedInputPostalCode = React.forwardRef<HTMLInputElement, InputBas
 	const { inputRef, ...others } = props;
 	// ref is without use, but without React.forwardRef() return console.error
 
-	return (
-		<MaskedInput
-			className="MuiOutlinedInput-input MuiInputBase-input css-1lkr5rz-MuiInputBase-input-MuiOutlinedInput-input"
-			{...others}
-			ref={inputRef}
-			mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]}
-			placeholderChar={'\u2000'}
-		/>
-	);
+	return <MaskedInput {...others} ref={inputRef} mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]} placeholderChar={'\u2000'} />;
 });

@@ -26,11 +26,11 @@ const Register: NextPage = () => {
 
 	useEffect(() => {
 		let newHasFormErrors = false;
-		Object.values(errors).map((error) => {
+		Object.values(errors).forEach((error) => {
 			if (Boolean(error)) newHasFormErrors = true;
 		});
 		if (hasFormErrors !== newHasFormErrors) setHasFormErrors(newHasFormErrors);
-	}, [errors]);
+	}, [errors, hasFormErrors]);
 
 	const onChangeCheck = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, checked } = Utils.GetNameAndCheckedFromHTMLInputElementEvent(e);

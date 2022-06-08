@@ -26,11 +26,11 @@ const Register: NextPage = () => {
 
 	useEffect(() => {
 		let newHasFormErrors = false;
-		Object.values(errors).map((error) => {
+		Object.values(errors).forEach((error) => {
 			if (Boolean(error)) newHasFormErrors = true;
 		});
 		if (hasFormErrors !== newHasFormErrors) setHasFormErrors(newHasFormErrors);
-	}, [errors]);
+	}, [errors, hasFormErrors]);
 
 	const onChangeCheck = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, checked } = Utils.GetNameAndCheckedFromHTMLInputElementEvent(e);
@@ -159,12 +159,16 @@ const Register: NextPage = () => {
 					switch (name) {
 						case 'email':
 							if (errors.email) validateEmail(e);
+							break;
 						case 'postalCode':
 							if (errors.postalCode) validatePostalCode(e);
+							break;
 						case 'phone':
 							if (errors.phone) validatePhone(e);
+							break;
 						case 'birthDate':
 							if (errors.birthDate) validateDate(e);
+							break;
 					}
 				}
 			}
@@ -174,17 +178,22 @@ const Register: NextPage = () => {
 
 	return (
 		<Grid container className={styles.container}>
-			<Grid item xs={2} className={styles.left}>
+			<Grid item sx={{ display: { sm: 'none', xs: 'none', md: 'initial' } }} md={2} className={styles.left}>
 				<Image src="/register.png" width={192} height={552} alt="Crie sua conta na Sharebook" />
 			</Grid>
 
-			<Grid item xs={10} className={styles.right}>
+			<Grid
+				item
+				sx={{ paddingLeft: { md: '5vw', lg: '8vw', xl: '13.1vw' }, textAlign: { xs: 'center', sm: 'center', md: 'start' } }}
+				md={10}
+				className={styles.right}
+			>
 				<Typography>Seja bem vindo.</Typography>
 				<Typography variant="h1" className={styles.title}>
 					Crie sua conta na Sharebook
 				</Typography>
 
-				<Grid container className={styles.containerForm}>
+				<Grid container className={styles.containerForm} sx={{ justifyContent: { xs: 'center', sm: 'center', md: 'space-between' } }}>
 					<Grid item xs={12} md={6} className={styles.leftForm}>
 						<TextField
 							data-testid="input-name"

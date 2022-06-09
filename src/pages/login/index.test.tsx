@@ -1,15 +1,19 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import LoginPage from './index.page';
+import axiosMock from 'axios';
 
+const loginErrorMessage = 'Login e/ou senha inválidos! Verifique seus dados e tente novamente.';
+
+//using "src/axios/__mocks__/axios.ts"
 describe('LoginPage ', () => {
 	beforeEach(() => {
 		act(() => {
 			render(<LoginPage />);
 		});
 	});
-	it('fields and button are working', () => {
+	it('fields and button are working', async () => {
 		const textFieldEmailEl = screen.getByTestId('input-email') as HTMLDivElement;
 		// 1. Email -> Should exists HTMLDivElement by testId: "input-email" with 2 children
 		expect(textFieldEmailEl).toBeInTheDocument();
@@ -25,7 +29,7 @@ describe('LoginPage ', () => {
 		expect(buttonLoginEl).toBeInTheDocument();
 		expect(buttonLoginEl).toBeDisabled();
 
-		// #region Email
+		// #region 1. Email
 		{
 			const divEmailEl = textFieldEmailEl?.lastElementChild as HTMLDivElement;
 			// 1.1 Should be HTMLDivElement, exists 2 children, first is div
@@ -47,7 +51,7 @@ describe('LoginPage ', () => {
 		}
 		// #endregion
 
-		// #region Password
+		// #region 2. Password
 		{
 			const divPasswordEl = textFieldPasswordEl?.lastElementChild as HTMLDivElement;
 			// 2.1 Should be HTMLDivElement, exists 2 children, first is div
@@ -67,17 +71,33 @@ describe('LoginPage ', () => {
 			expect(inputPasswordEl.value).toBe(password);
 			expect(buttonLoginEl).not.toBeDisabled(); // shouldn't be disabled
 
+			const changePasswordWithBlur = (password: string): void => {
+				fireEvent.change(inputPasswordEl, { target: { value: password } });
+				fireEvent.blur(inputPasswordEl);
+			};
+
 			// #region Password ivalid
 			{
-				const ivalidPassword = '123';
+				const invalidPassword = '123';
 				// 2.3 Should change
-				fireEvent.change(inputPasswordEl, { target: { value: ivalidPassword } });
-				fireEvent.blur(inputPasswordEl);
-				expect(inputPasswordEl.value).toBe(ivalidPassword);
+				changePasswordWithBlur(invalidPassword);
+				expect(inputPasswordEl.value).toBe(invalidPassword);
 				expect(buttonLoginEl).toBeDisabled(); // should be disabled because has error
 			}
 			// #endregion
+
+			changePasswordWithBlur(password); //remove error of input-password
 		}
+		// #endregion
+
+		// #region 3. Login Error (500+)
+		{
+			axiosMock.create().post.mockRejectedValueOnce();
+			fireEvent.click(buttonLoginEl);
+			const errorEl = await waitFor(() => screen.getByText(loginErrorMessage));
+			expect(errorEl).toBeInTheDocument();
+		}
+
 		// #endregion
 	});
 });

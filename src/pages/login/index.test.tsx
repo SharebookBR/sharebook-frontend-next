@@ -3,6 +3,7 @@ import { act } from 'react-dom/test-utils';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import LoginPage from './index.page';
 import axiosMock from 'axios';
+import { TestMuiTextField } from '@sharebook-tests';
 
 const loginErrorMessage = 'Login e/ou senha inválidos! Verifique seus dados e tente novamente.';
 
@@ -13,7 +14,13 @@ describe('LoginPage ', () => {
 			render(<LoginPage />);
 		});
 	});
-	it('fields and button are working', async () => {
+	it('TestField Email', () => {
+		TestMuiTextField({ required: true, dataTestId: 'input-email', type: 'text' });
+	});
+	it('TestField Password', () => {
+		TestMuiTextField({ required: true, dataTestId: 'input-password', type: 'password' });
+	});
+	it('fields and button are working together', async () => {
 		const textFieldEmailEl = screen.getByTestId('input-email') as HTMLDivElement;
 		// 1. Email -> Should exists HTMLDivElement by testId: "input-email" with 2 children
 		expect(textFieldEmailEl).toBeInTheDocument();

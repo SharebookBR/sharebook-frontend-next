@@ -12,17 +12,19 @@ import configs from '@sharebook-configs';
 import axios from 'axios';
 import LabelCheck from './LabelCheck';
 import sharebookAxiosClient from '@sharebook-axios';
-import { MaskedInputDate, MaskedInputPhone, MaskedInputPostalCode } from '@sharebook-components';
-import { EnumDateTypes } from '@sharebook-enums';
+import { MaskedInputPhone, MaskedInputPostalCode } from '@sharebook-components';
+import { ModalParentEmail } from './ModalParentEmail';
 
 //TODO:
 // Add loading
+// Add option to show and/or chose another parentEmail
 
 const Register: NextPage = () => {
 	const [values, setValues] = useState<IValues>(initialValues);
 	const [hasFormErrors, setHasFormErrors] = useState(false);
 	const [errors, setErrors] = useState<IErrors>(initialErrors);
 	const [registerErrors, setRegisterErrors] = useState<string[]>([]);
+	const [showModalParentEmail, setShowModalParentEmail] = useState(false);
 
 	useEffect(() => {
 		let newHasFormErrors = false;
@@ -77,13 +79,18 @@ const Register: NextPage = () => {
 		[setErrors]
 	);
 
-	const validateDate = useCallback(
+	const validateAge = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			// TODO Validate birthDate (don't can is future date)
 			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
 			if (value.length > 0) {
 				let newErrorMessage = '';
-				if (!Utils.DateIsValid(value, EnumDateTypes.ddMMyyyy)) newErrorMessage = 'Data inválida! formato deve ser: dd/MM/yyyy';
+				try {
+					const valueToNumber = parseInt(value);
+					if (!Utils.AgeIsValid(valueToNumber)) newErrorMessage = 'Idade inválida! Tente entre 8 e 100.';
+				} catch {
+					newErrorMessage = 'Idade inválida! Tente entre 8 e 100.';
+				}
 
 				setErrors((currentErrors) => {
 					return { ...currentErrors, [name]: newErrorMessage };
@@ -95,15 +102,19 @@ const Register: NextPage = () => {
 
 	const register = () => {
 		console.log('Register', values);
-		sharebookAxiosClient
-			.post('Account/Register', { country: 'Brasil', ...values })
-			.then((res: any) => {
-				if (registerErrors?.length > 0) setRegisterErrors([]);
-			})
-			.catch((err: any) => {
-				setRegisterErrors(err?.response?.data?.messages || ['Erro ao cadastrar usuário']);
-				console.error('err', err);
-			});
+		if (Utils.AgeIsBiggerThan18(values.age || 0) || Utils.EmailIsValid(values.parentEmail || '')) {
+			sharebookAxiosClient
+				.post('Account/Register', { country: 'Brasil', ...values })
+				.then((res: any) => {
+					if (registerErrors?.length > 0) setRegisterErrors([]);
+				})
+				.catch((err: any) => {
+					setRegisterErrors(err?.response?.data?.messages || ['Erro ao cadastrar usuário']);
+					console.error('err', err);
+				});
+		} else {
+			setShowModalParentEmail(true);
+		}
 	};
 
 	const validateEmail = useCallback(
@@ -147,6 +158,30 @@ const Register: NextPage = () => {
 		[getInfosFromPostalCode, setErrors]
 	);
 
+	const setParentEmail = useCallback(
+		(newEmail: string): boolean => {
+			let errorMessage = '';
+			if (Utils.EmailIsValid(newEmail)) {
+				if (newEmail?.toLowerCase() === values.email.toLowerCase())
+					errorMessage = 'Email dos pais/responsável deve ser diferente do seu email.';
+				else
+					setValues((currentValues) => {
+						return { ...currentValues, parentEmail: newEmail };
+					});
+			} else errorMessage = 'Email inválido!';
+			if (Boolean(errorMessage))
+				setErrors((currentErrors) => {
+					return { ...currentErrors, parentEmail: errorMessage };
+				});
+			return Boolean(!errorMessage);
+		},
+		[setErrors, setValues, values]
+	);
+
+	const handleCloseModalParentEmail = useCallback((): void => {
+		setShowModalParentEmail(false);
+	}, [setShowModalParentEmail]);
+
 	const onChange = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
 			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
@@ -167,13 +202,13 @@ const Register: NextPage = () => {
 							if (errors.phone) validatePhone(e);
 							break;
 						case 'birthDate':
-							if (errors.birthDate) validateDate(e);
+							if (errors.age) validateAge(e);
 							break;
 					}
 				}
 			}
 		},
-		[setValues, errors, validateEmail, validatePostalCode, validatePhone, validateDate]
+		[setValues, errors, validateEmail, validatePostalCode, validatePhone, validateAge]
 	);
 
 	return (
@@ -245,24 +280,25 @@ const Register: NextPage = () => {
 						/>
 
 						<TextField
-							data-testid="input-birthDate"
+							data-testid="input-age"
 							className={styles.input}
-							name="birthDate"
+							name="age"
+							type="number"
 							InputProps={{
 								inputProps: {
-									showMask: false
-								},
-								inputComponent: MaskedInputDate
+									max: 100,
+									min: 8
+								}
 							}}
 							fullWidth
-							label="Data de nascimento"
-							value={values.birthDate}
-							placeholder="01/01/2000"
+							label="Idade"
+							value={values.age || 0}
+							placeholder="Digite sua idade"
 							required
 							onChange={onChange}
-							onBlur={(e) => validateDate(e as React.ChangeEvent<HTMLInputElement>)}
-							error={Boolean(errors.birthDate)}
-							helperText={errors.birthDate}
+							onBlur={(e) => validateAge(e as React.ChangeEvent<HTMLInputElement>)}
+							error={Boolean(errors.age)}
+							helperText={errors.age}
 						/>
 
 						<TextField
@@ -430,6 +466,16 @@ const Register: NextPage = () => {
 					</Grid>
 				</Grid>
 			</Grid>
+			{showModalParentEmail && (
+				<ModalParentEmail
+					value={values.parentEmail}
+					open={showModalParentEmail}
+					error={errors.parentEmail}
+					onClose={handleCloseModalParentEmail}
+					validateEmail={validateEmail}
+					setParentEmail={setParentEmail}
+				/>
+			)}
 		</Grid>
 	);
 };

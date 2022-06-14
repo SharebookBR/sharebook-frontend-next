@@ -27,7 +27,6 @@ describe('RegisterPage (fields/buttons requireds)', () => {
 		TestMuiTextField({ dataTestId: 'input-street', required: true, type: 'text' });
 	});
 	it('Contains input to city', () => {
-		expect(screen.getByTestId('input-city')).toBeInTheDocument();
 		TestMuiTextField({ dataTestId: 'input-city', required: true, type: 'text' });
 	});
 	it('Contains input to password', () => {
@@ -37,7 +36,7 @@ describe('RegisterPage (fields/buttons requireds)', () => {
 		TestMuiTextField({ dataTestId: 'input-confirmPassword', required: true, type: 'password' });
 	});
 	it('Contains input to birthDate', () => {
-		expect(screen.getByTestId('input-birthDate')).toBeInTheDocument();
+		TestMuiTextField({ dataTestId: 'input-age', required: true, type: 'number' });
 	});
 	it('Contains input to postalCode', () => {
 		TestMuiTextField({ dataTestId: 'input-postalCode', required: true, type: 'text' });

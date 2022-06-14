@@ -1,13 +1,14 @@
 export interface IRegisterBase {
 	name: string;
 	email: string;
+	parentEmail?: string;
 	phone: string;
 	street: string;
 	complement?: string;
 	city: string;
 	password: string;
 	confirmPassword: string;
-	birthDate: string;
+	age?: number;
 	postalCode: string;
 	number: string;
 	neighborhood: string;

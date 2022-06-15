@@ -15,17 +15,17 @@ describe('Testing AgeUtils', () => {
 			expect(result).not.toBeTruthy();
 		});
 	});
-	it('AgeIsBiggerThan18 -> true', () => {
-		const invalidPasswords = [18, 50];
+	it('AgeIsEqualsOrBiggerThanX - 12 -> true', () => {
+		const invalidPasswords = [12, 18, 50];
 		invalidPasswords.forEach((item) => {
-			const result = Utils.AgeIsBiggerThan18(item);
+			const result = Utils.AgeIsEqualsOrBiggerThanX(12, item);
 			expect(result).toBeTruthy();
 		});
 	});
-	it('AgeIsBiggerThan18 -> false', () => {
-		const invalidPasswords = [-5, 8, 17, 110];
+	it('AgeIsEqualsOrBiggerThanX - 12 -> false', () => {
+		const invalidPasswords = [-5, 8, 11, 110];
 		invalidPasswords.forEach((item) => {
-			const result = Utils.AgeIsBiggerThan18(item);
+			const result = Utils.AgeIsEqualsOrBiggerThanX(12, item);
 			expect(result).not.toBeTruthy();
 		});
 	});

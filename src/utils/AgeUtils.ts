@@ -5,11 +5,12 @@ class AgeUtils {
 	static AgeIsValid(age: number): boolean {
 		return Boolean(age >= 8 && age <= 100);
 	}
-	/** Return true if age is between 18 and 100!
+
+	/** Return true if age is between X and 100!
 	 *
-	 *  Retorna true se a idade for entre 18 e 100! */
-	static AgeIsBiggerThan18(age: number): boolean {
-		return Boolean(this.AgeIsValid(age) && age >= 18);
+	 *  Retorna true se a idade for entre X e 100! */
+	static AgeIsEqualsOrBiggerThanX(x: number, age: number): boolean {
+		return Boolean(this.AgeIsValid(age) && age >= x);
 	}
 }
 

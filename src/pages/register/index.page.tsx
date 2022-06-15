@@ -14,6 +14,7 @@ import LabelCheck from './LabelCheck';
 import sharebookAxiosClient from '@sharebook-axios';
 import { MaskedInputPhone, MaskedInputPostalCode } from '@sharebook-components';
 import { ModalParentEmail } from './ModalParentEmail';
+import { RegisterSuccess } from './RegisterSuccess';
 
 const Register: NextPage = () => {
 	const [loadingRegister, setLoadingRegister] = useState(false);
@@ -21,10 +22,11 @@ const Register: NextPage = () => {
 	const [hasFormErrors, setHasFormErrors] = useState(false);
 	const [errors, setErrors] = useState<IErrors>(initialErrors);
 	const [registerErrors, setRegisterErrors] = useState<string[]>([]);
+	const [registerSuccess, setRegisterSuccess] = useState(false);
 	const [showModalParentEmail, setShowModalParentEmail] = useState(false);
 
 	const ageIsEqualsOrBiggerThan12 = useCallback((): boolean => Utils.AgeIsEqualsOrBiggerThanX(12, values.age || 0), [values.age]);
-	const showTextParentEmail = Boolean(Boolean(values.parentEmail) || ageIsEqualsOrBiggerThan12());
+	const showTextParentEmail = Boolean(Boolean(values.parentEmail) || !ageIsEqualsOrBiggerThan12());
 
 	useEffect(() => {
 		let newHasFormErrors = false;
@@ -105,8 +107,8 @@ const Register: NextPage = () => {
 			setLoadingRegister(true);
 			sharebookAxiosClient
 				.post('Account/Register', { country: 'Brasil', ...values })
-				.then((res: any) => {
-					if (registerErrors?.length > 0) setRegisterErrors([]);
+				.then(() => {
+					setRegisterSuccess(true);
 				})
 				.catch((err: any) => {
 					setRegisterErrors(err?.response?.data?.messages || ['Erro ao cadastrar usuário']);
@@ -213,6 +215,8 @@ const Register: NextPage = () => {
 		},
 		[setValues, errors, validateEmail, validatePostalCode, validatePhone, validateAge]
 	);
+
+	if (registerSuccess) return <RegisterSuccess />;
 
 	return (
 		<Grid container className={styles.container}>

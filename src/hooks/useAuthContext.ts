@@ -20,6 +20,7 @@ const initialValue: IAuthContext = { authenticated: false };
 const keyLocalStorage = 'shareBookUser';
 /*  
     TODO: 
+		- Get "messages" with status from axios is between 400 and 499
 		- login without reload
         - Validate expiration
         - If token has expirated, remove from localStorage
@@ -38,7 +39,7 @@ export function useAuthContext() {
 				setAuthContext(responseData?.value);
 				return true;
 			} catch {
-				console.log('Falha no login.');
+				console.error('Falha no login.');
 				localStorage.removeItem(keyLocalStorage);
 				if (authContext != initialValue) setAuthContext(initialValue);
 				return false;

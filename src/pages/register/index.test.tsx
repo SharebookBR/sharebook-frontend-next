@@ -2,6 +2,8 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { render, screen } from '@testing-library/react';
 import RegisterPage from './index.page';
+import { TestMuiTextField } from '@sharebook-tests';
+import { TestMuiButton } from '../../tests/TestMuiButton';
 
 describe('RegisterPage (fields/buttons requireds)', () => {
 	beforeEach(() => {
@@ -10,43 +12,43 @@ describe('RegisterPage (fields/buttons requireds)', () => {
 		});
 	});
 	it('Contains button to register', () => {
-		expect(screen.getByTestId('button-register')).toBeInTheDocument();
+		TestMuiButton({ dataTestId: 'button-register', disabled: true });
 	});
 	it('Contains input to name', () => {
-		expect(screen.getByTestId('input-name')).toBeInTheDocument();
+		TestMuiTextField({ dataTestId: 'input-name', required: true, type: 'text' });
 	});
 	it('Contains input to email', () => {
-		expect(screen.getByTestId('input-email')).toBeInTheDocument();
+		TestMuiTextField({ dataTestId: 'input-email', required: true, type: 'email' });
 	});
 	it('Contains input to phone', () => {
-		expect(screen.getByTestId('input-phone')).toBeInTheDocument();
+		TestMuiTextField({ dataTestId: 'input-phone', required: true, type: 'text' });
 	});
 	it('Contains input to street', () => {
-		expect(screen.getByTestId('input-street')).toBeInTheDocument();
+		TestMuiTextField({ dataTestId: 'input-street', required: true, type: 'text' });
 	});
 	it('Contains input to city', () => {
-		expect(screen.getByTestId('input-city')).toBeInTheDocument();
+		TestMuiTextField({ dataTestId: 'input-city', required: true, type: 'text' });
 	});
 	it('Contains input to password', () => {
-		expect(screen.getByTestId('input-password')).toBeInTheDocument();
+		TestMuiTextField({ dataTestId: 'input-password', required: true, type: 'password' });
 	});
 	it('Contains input to confirmPassword', () => {
-		expect(screen.getByTestId('input-confirmPassword')).toBeInTheDocument();
+		TestMuiTextField({ dataTestId: 'input-confirmPassword', required: true, type: 'password' });
 	});
 	it('Contains input to birthDate', () => {
-		expect(screen.getByTestId('input-birthDate')).toBeInTheDocument();
+		TestMuiTextField({ dataTestId: 'input-age', required: true, type: 'number' });
 	});
 	it('Contains input to postalCode', () => {
-		expect(screen.getByTestId('input-postalCode')).toBeInTheDocument();
+		TestMuiTextField({ dataTestId: 'input-postalCode', required: true, type: 'text' });
 	});
 	it('Contains input to number', () => {
-		expect(screen.getByTestId('input-number')).toBeInTheDocument();
+		TestMuiTextField({ dataTestId: 'input-number', required: true, type: 'text' });
 	});
 	it('Contains input to neighborhood', () => {
-		expect(screen.getByTestId('input-neighborhood')).toBeInTheDocument();
+		TestMuiTextField({ dataTestId: 'input-neighborhood', required: true, type: 'text' });
 	});
 	it('Contains input to state', () => {
-		expect(screen.getByTestId('input-state')).toBeInTheDocument();
+		TestMuiTextField({ dataTestId: 'input-state', required: true, type: 'text' });
 	});
 	it('Contains input to acceptTermOfUse', () => {
 		expect(screen.getByTestId('input-acceptTermOfUse')).toBeInTheDocument();

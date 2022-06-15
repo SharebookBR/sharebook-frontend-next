@@ -5,7 +5,8 @@ import HTMLElementsUtils from './HTMLElementsUtils';
 import PostalCodeUtils from './PostalCodeUtils';
 import PhoneUtils from './PhoneUtils';
 import DateUtils from './DateUtils';
+import AgeUtils from './AgeUtils';
 
-class Utils extends Mixin(EmailUtils, PasswordUtils, HTMLElementsUtils, PostalCodeUtils, PhoneUtils, DateUtils) {}
+class Utils extends Mixin(EmailUtils, PasswordUtils, HTMLElementsUtils, PostalCodeUtils, PhoneUtils, DateUtils, AgeUtils) {}
 
 export default Utils;

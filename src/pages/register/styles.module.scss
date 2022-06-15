@@ -24,6 +24,16 @@
 
 			.leftForm {
 				max-width: 358px;
+
+				.showTextParentEmail {
+					margin-top: 24px;
+					display: inline-block;
+					height: 56px;
+					width: calc(100% - 95px);
+					text-align: center;
+					cursor: pointer;
+					padding-top: 10px;
+				}
 			}
 
 			.rightForm {
@@ -48,5 +58,13 @@
 				}
 			}
 		}
+	}
+}
+
+.modalParentEmail {
+	p,
+	button,
+	.input {
+		margin-bottom: 16px;
 	}
 }

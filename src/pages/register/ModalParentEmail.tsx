@@ -57,7 +57,13 @@ export function ModalParentEmail({ open, value, error, onClose, setParentEmail, 
 					error={Boolean(error)}
 					helperText={error}
 				/>
-				<Button fullWidth variant="contained" disabled={Boolean(error) || !emailIsValid} onClick={onConfirmParentEmail}>
+				<Button
+					data-testid="button-add-parentEmail"
+					fullWidth
+					variant="contained"
+					disabled={Boolean(error) || !emailIsValid}
+					onClick={onConfirmParentEmail}
+				>
 					Continuar
 				</Button>
 			</Box>

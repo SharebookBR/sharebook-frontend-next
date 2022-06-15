@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import type { NextPage } from 'next';
-import { Button, Checkbox, FormControlLabel, FormGroup, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Checkbox, FormControlLabel, FormGroup, Grid, TextField, Typography } from '@mui/material';
 
 import styles from './styles.module.scss';
 import Image from 'next/image';
@@ -17,7 +17,6 @@ import { ModalParentEmail } from './ModalParentEmail';
 
 //TODO:
 // Add loading
-// Add option to show and/or chose another parentEmail
 
 const Register: NextPage = () => {
 	const [values, setValues] = useState<IValues>(initialValues);
@@ -25,6 +24,7 @@ const Register: NextPage = () => {
 	const [errors, setErrors] = useState<IErrors>(initialErrors);
 	const [registerErrors, setRegisterErrors] = useState<string[]>([]);
 	const [showModalParentEmail, setShowModalParentEmail] = useState(false);
+	const showTextParentEmail = Boolean(Boolean(values.parentEmail) || (values.age && values.age >= 8 && values.age < 12));
 
 	useEffect(() => {
 		let newHasFormErrors = false;
@@ -290,7 +290,7 @@ const Register: NextPage = () => {
 									min: 8
 								}
 							}}
-							fullWidth
+							fullWidth={!showTextParentEmail}
 							label="Idade"
 							value={values.age || 0}
 							placeholder="Digite sua idade"
@@ -300,6 +300,14 @@ const Register: NextPage = () => {
 							error={Boolean(errors.age)}
 							helperText={errors.age}
 						/>
+
+						{showTextParentEmail && (
+							<Box className={styles.showTextParentEmail}>
+								<Typography variant="bodyMedium" onClick={() => setShowModalParentEmail(true)}>
+									E-mail do responsável
+								</Typography>
+							</Box>
+						)}
 
 						<TextField
 							data-testid="input-password"

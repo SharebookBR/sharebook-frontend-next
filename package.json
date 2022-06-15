@@ -4,7 +4,7 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
-		"dev-docker": "docker-compose -f docker-compose.dev.yml up",
+		"dev-docker-linux": "docker-compose -f docker-compose.dev.linux.yml",
 		"build": "next build",
 		"build-start": "next build && next start",
 		"start": "next start",

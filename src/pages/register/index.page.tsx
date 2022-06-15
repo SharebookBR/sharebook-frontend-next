@@ -15,16 +15,16 @@ import sharebookAxiosClient from '@sharebook-axios';
 import { MaskedInputPhone, MaskedInputPostalCode } from '@sharebook-components';
 import { ModalParentEmail } from './ModalParentEmail';
 
-//TODO:
-// Add loading
-
 const Register: NextPage = () => {
+	const [loadingRegister, setLoadingRegister] = useState(false);
 	const [values, setValues] = useState<IValues>(initialValues);
 	const [hasFormErrors, setHasFormErrors] = useState(false);
 	const [errors, setErrors] = useState<IErrors>(initialErrors);
 	const [registerErrors, setRegisterErrors] = useState<string[]>([]);
 	const [showModalParentEmail, setShowModalParentEmail] = useState(false);
-	const showTextParentEmail = Boolean(Boolean(values.parentEmail) || (values.age && values.age >= 8 && values.age < 12));
+
+	const ageIsEqualsOrBiggerThan12 = useCallback((): boolean => Utils.AgeIsEqualsOrBiggerThanX(12, values.age || 0), [values.age]);
+	const showTextParentEmail = Boolean(Boolean(values.parentEmail) || ageIsEqualsOrBiggerThan12());
 
 	useEffect(() => {
 		let newHasFormErrors = false;
@@ -81,7 +81,6 @@ const Register: NextPage = () => {
 
 	const validateAge = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
-			// TODO Validate birthDate (don't can is future date)
 			const { name, value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
 			if (value.length > 0) {
 				let newErrorMessage = '';
@@ -102,7 +101,8 @@ const Register: NextPage = () => {
 
 	const register = () => {
 		console.log('Register', values);
-		if (Utils.AgeIsBiggerThan18(values.age || 0) || Utils.EmailIsValid(values.parentEmail || '')) {
+		if (ageIsEqualsOrBiggerThan12() || Utils.EmailIsValid(values.parentEmail || '')) {
+			setLoadingRegister(true);
 			sharebookAxiosClient
 				.post('Account/Register', { country: 'Brasil', ...values })
 				.then((res: any) => {
@@ -111,6 +111,9 @@ const Register: NextPage = () => {
 				.catch((err: any) => {
 					setRegisterErrors(err?.response?.data?.messages || ['Erro ao cadastrar usuário']);
 					console.error('err', err);
+				})
+				.finally(() => {
+					setLoadingRegister(false);
 				});
 		} else {
 			setShowModalParentEmail(true);
@@ -452,7 +455,7 @@ const Register: NextPage = () => {
 							data-testid="button-register"
 							className={styles.registerButton}
 							fullWidth
-							disabled={hasFormErrors || !values.acceptTermOfUse}
+							disabled={hasFormErrors || loadingRegister || !values.acceptTermOfUse}
 							variant="contained"
 							onClick={() => register()}
 						>

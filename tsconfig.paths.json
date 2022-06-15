@@ -10,7 +10,8 @@
 			"@sharebook-configs": ["configs"],
 			"@sharebook-axios": ["axios"],
 			"@sharebook-utils": ["utils"],
-			"@sharebook-enums": ["enums"]
+			"@sharebook-enums": ["enums"],
+			"@sharebook-tests": ["tests"]
 		}
 	}
 }

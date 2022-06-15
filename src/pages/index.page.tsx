@@ -7,18 +7,18 @@ import { IBook } from './home/types';
 const Home: NextPage = () => {
 	const [books, setBooks] = useState<IBook[]>([]);
 
-	const getAvailableBooks = () => {
-		sharebookAxiosClient.get('book/AvailableBooks').then((result: any) => {
-			console.log('result', result);
-			setBooks(result.data);
-		});
+	const getAvailableBooks = async () => {
+		const result = await sharebookAxiosClient.get('book/AvailableBooks');
+		setBooks(result?.data);
 	};
 
 	return (
 		<div>
 			<main>
 				<h1>Welcome to ShareBookBR</h1>
-				<button onClick={() => getAvailableBooks()}>Get</button>
+				<button data-testid="getAvailableBooks" onClick={() => getAvailableBooks()}>
+					Get
+				</button>
 				<List>
 					{books.map((book) => (
 						<ListItem key={book.id}>{`${book.title} - ${book.category} - (${book.author})`}</ListItem>

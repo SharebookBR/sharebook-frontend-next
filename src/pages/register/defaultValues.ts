@@ -5,7 +5,7 @@ const initialRegisterBase: IRegisterBase = {
 	email: '',
 	phone: '',
 	street: '',
-	birthDate: '',
+	age: undefined,
 	complement: '',
 	city: '',
 	password: '',

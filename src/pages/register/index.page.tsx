@@ -24,7 +24,7 @@ const Register: NextPage = () => {
 	const [showModalParentEmail, setShowModalParentEmail] = useState(false);
 
 	const ageIsEqualsOrBiggerThan12 = useCallback((): boolean => Utils.AgeIsEqualsOrBiggerThanX(12, values.age || 0), [values.age]);
-	const showTextParentEmail = Boolean(Boolean(values.parentEmail) || ageIsEqualsOrBiggerThan12());
+	const showTextParentEmail = Boolean(Boolean(values.parentEmail) || !ageIsEqualsOrBiggerThan12());
 
 	useEffect(() => {
 		let newHasFormErrors = false;

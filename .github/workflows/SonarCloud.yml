@@ -5,7 +5,8 @@ on:
         types: [opened, synchronize, reopened]
 
 jobs:
-    install-sonarcloud:
+    sonarcloud:
+        name: SonarCloud
         runs-on: ubuntu-latest
 
         steps:
@@ -15,15 +16,6 @@ jobs:
               uses: actions/setup-node@v2
               with:
                   node-version: 16.x
-            - name: Install packages
-              run: |
-                  if [ -e yarn.lock ]; then
-                  yarn install --frozen-lockfile
-                  elif [ -e package-lock.json ]; then
-                  npm ci
-                  else
-                  npm i --force
-                  fi
             - name: SonarCloud Scan
               uses: SonarSource/sonarcloud-github-action@master
               env:

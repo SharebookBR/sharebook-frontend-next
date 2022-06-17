@@ -22,7 +22,7 @@ jobs:
                   elif [ -e package-lock.json ]; then
                   npm ci
                   else
-                  npm i
+                  npm i --force
                   fi
             - name: SonarCloud Scan
               uses: SonarSource/sonarcloud-github-action@master

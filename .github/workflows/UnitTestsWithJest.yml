@@ -22,7 +22,7 @@ jobs:
                   elif [ -e package-lock.json ]; then
                   npm ci
                   else
-                  npm i
+                  npm i --force
                   fi
             - name: Run tests
               run: npm run test --coverage

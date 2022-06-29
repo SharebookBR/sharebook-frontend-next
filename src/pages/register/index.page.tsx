@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import type { NextPage } from 'next';
-import { Box, Button, Checkbox, FormControlLabel, FormGroup, Grid, TextField, Typography } from '@mui/material';
+import { Box, Button, Checkbox, FormControlLabel, FormGroup, Grid, TextField, Typography, Link as LinkMui } from '@mui/material';
 
 import styles from './styles.module.scss';
 import Image from 'next/image';
@@ -26,7 +26,7 @@ const Register: NextPage = () => {
 	const [showModalParentEmail, setShowModalParentEmail] = useState(false);
 
 	const ageIsEqualsOrBiggerThan12 = useCallback((): boolean => Utils.AgeIsEqualsOrBiggerThanX(12, values.age || 0), [values.age]);
-	const showTextParentEmail = Boolean(Boolean(values.parentEmail) || (Boolean(values.age) && !ageIsEqualsOrBiggerThan12()));
+	const showTextParentEmail = Boolean(Boolean(values.parentEmail) || (Boolean(values.age && values.age > 7) && !ageIsEqualsOrBiggerThan12()));
 
 	useEffect(() => {
 		let newHasFormErrors = false;
@@ -206,7 +206,7 @@ const Register: NextPage = () => {
 						case 'phone':
 							if (errors.phone) validatePhone(e);
 							break;
-						case 'birthDate':
+						case 'age':
 							if (errors.age) validateAge(e);
 							break;
 					}
@@ -350,15 +350,29 @@ const Register: NextPage = () => {
 
 						<FormGroup className={styles.acceptLabels}>
 							<FormControlLabel
+								sx={{ mt: 4 }}
 								control={
 									<Checkbox name="allowSendingEmail" defaultChecked onChange={onChangeCheck} value={values.allowSendingEmail} />
 								}
 								label={<LabelCheck label="Aceito receber e-mails e newsletter da Sharebook" />}
 							/>
 							<FormControlLabel
+								sx={{ mt: 4 }}
 								data-testid="input-acceptTermOfUse"
 								control={<Checkbox name="acceptTermOfUse" onChange={onChangeCheck} value={values.acceptTermOfUse} />}
-								label={<LabelCheck label="Eu concordo com os Termos de uso" />}
+								label={
+									<LabelCheck
+										label={
+											<Typography>
+												Eu concordo com os{' '}
+												<LinkMui href="/termos-de-uso" target="_blank">
+													Termos de uso
+												</LinkMui>{' '}
+												da Sharebook
+											</Typography>
+										}
+									/>
+								}
 							/>
 						</FormGroup>
 					</Grid>

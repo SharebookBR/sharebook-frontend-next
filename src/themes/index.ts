@@ -166,6 +166,13 @@ const theme = createTheme({
 					fontSize: 16
 				}
 			}
+		},
+		MuiLink: {
+			styleOverrides: {
+				root: {
+					color: '#1a0dab'
+				}
+			}
 		}
 	}
 });

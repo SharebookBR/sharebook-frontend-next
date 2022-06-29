@@ -99,6 +99,7 @@ const Login: NextPage = () => {
 						autoFocus
 						value={email}
 						className={styles.input}
+						type="email"
 						label="E-mail"
 						helperText={emailError}
 						required

@@ -15,7 +15,7 @@ describe('LoginPage ', () => {
 		});
 	});
 	it('TestField Email rendered', () => {
-		TestMuiTextField({ required: true, dataTestId: 'input-email', type: 'text' });
+		TestMuiTextField({ required: true, dataTestId: 'input-email', type: 'email' });
 	});
 	it('TestField Password rendered', () => {
 		TestMuiTextField({ required: true, dataTestId: 'input-password', type: 'password' });

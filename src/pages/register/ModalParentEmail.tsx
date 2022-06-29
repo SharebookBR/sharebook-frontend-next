@@ -1,7 +1,7 @@
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { SharebookDialog } from '@sharebook-components';
 import Utils from '@sharebook-utils';
-import React, { ReactNode, useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import styles from './styles.module.scss';
 
@@ -22,11 +22,11 @@ export function ModalParentEmail({ open, value, error, onClose, setParentEmail, 
 
 	const onChange = useCallback(
 		(e: React.ChangeEvent<HTMLInputElement>) => {
-			const { value } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
-			const newEmailsIsValid = Utils.EmailIsValid(value);
+			const { value: currentValue } = Utils.GetNameAndValueFromHTMLInputElementEvent(e);
+			const newEmailsIsValid = Utils.EmailIsValid(currentValue);
 			setEmailIsValid(newEmailsIsValid);
-			if (error && value.length > 5) validateEmail(e);
-			_setParentEmail(value);
+			if (error && currentValue.length > 5) validateEmail(e);
+			_setParentEmail(currentValue);
 		},
 		[validateEmail, _setParentEmail, setEmailIsValid, error]
 	);

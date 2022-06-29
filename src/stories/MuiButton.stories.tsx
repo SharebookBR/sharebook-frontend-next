@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { Button, ThemeProvider } from '@mui/material';
+import { Button } from '@mui/material';
 import ThemeProviderWithFont from './ThemeProviderWithFont';
 
 const controlSelect = { control: { type: 'select' } };

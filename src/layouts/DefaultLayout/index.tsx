@@ -1,12 +1,19 @@
 import { SharebookFooter, SharebookNavBar } from '@sharebook-components';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import Head from 'next/head';
+import CookieConsent, { keyConsent } from './CookieConsent';
 
 interface DefaultLayoutProps {
 	children: ReactNode;
 }
 
 export function DefaultLayout({ children }: DefaultLayoutProps) {
+	const [consent, setConsent] = useState<string | null>(null);
+
+	useEffect(() => {
+		if (localStorage) setConsent(localStorage.getItem(keyConsent));
+	}, []);
+
 	return (
 		<>
 			<Head>
@@ -19,6 +26,7 @@ export function DefaultLayout({ children }: DefaultLayoutProps) {
 			</Head>
 			<SharebookNavBar />
 			{children}
+			{consent || <CookieConsent />}
 			<SharebookFooter />
 		</>
 	);

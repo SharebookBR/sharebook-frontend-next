@@ -1,7 +1,7 @@
 import { Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import React, { ReactNode } from 'react';
-import { useWindowSize } from '@sharebook-hooks';
+import { useWindowSize } from 'usehooks-ts';
 
 interface ISharebookDialogProps {
 	title: ReactNode;

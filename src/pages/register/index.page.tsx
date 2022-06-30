@@ -365,7 +365,7 @@ const Register: NextPage = () => {
 										label={
 											<Typography>
 												Eu concordo com os{' '}
-												<LinkMui href="/termos-de-uso" target="_blank">
+												<LinkMui href="/terms-of-use" target="_blank">
 													Termos de uso
 												</LinkMui>{' '}
 												da Sharebook

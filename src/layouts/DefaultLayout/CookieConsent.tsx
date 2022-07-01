@@ -31,7 +31,7 @@ export default function CookieConsent() {
 			>
 				<Typography variant="bodyMedium" pt={2}>
 					Esse site salva cookies para uma melhor experiência de usuário. Saiba mais lendo nossa
-					<Link ml={1} target="_blank" href="/politica-privacidade">
+					<Link ml={1} target="_blank" href="/privacy-policy">
 						Política de privacidade.
 					</Link>
 				</Typography>

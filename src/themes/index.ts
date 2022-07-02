@@ -2,6 +2,7 @@ import { createTheme } from '@mui/material/styles';
 
 /* customTypography.d.ts */
 /*  customCollors.d.ts */
+const borderColorHover: string = '#004FE5';
 
 const theme = createTheme({
 	typography: {
@@ -171,6 +172,22 @@ const theme = createTheme({
 			styleOverrides: {
 				root: {
 					color: '#1a0dab'
+				}
+			}
+		},
+		MuiTextField: {
+			styleOverrides: {
+				root: {
+					'&:hover': {
+						'& label.MuiInputLabel-shrink:not(.Mui-error)': {
+							/* label of TextField:hover when it's shrink and not error */
+							color: borderColorHover
+						},
+						'& div:not(.Mui-error) > fieldset': {
+							/* fieldset of TextField:hover when it's not error */
+							borderColor: borderColorHover
+						}
+					}
 				}
 			}
 		}

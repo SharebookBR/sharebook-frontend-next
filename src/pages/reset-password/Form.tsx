@@ -85,6 +85,8 @@ export default function Form() {
 				Enviaremos um e-mail com instruções de como redefinir sua senha.
 			</Typography>
 			<TextField
+				data-testid="input-email"
+				required
 				type="email"
 				fullWidth
 				placeholder="example@email.com"
@@ -103,6 +105,7 @@ export default function Form() {
 					</Typography>
 				))}
 			<LoadingButton
+				data-testid="button-resetpassword"
 				fullWidth
 				variant="contained"
 				style={{ marginTop: '16px' }}
@@ -120,7 +123,7 @@ export default function Form() {
 				</Typography>
 			)}
 			<Box mt={2}>
-				<Typography variant="bodySmall" sx={{ '& a': { pl: 1 } }}>
+				<Typography data-testid="text-link-to-register" variant="bodySmall" sx={{ '& a': { pl: 1 } }}>
 					Ainda não tem conta?
 					<Link href="/register" passHref>
 						Crie uma grátis

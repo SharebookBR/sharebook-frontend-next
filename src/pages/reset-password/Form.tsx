@@ -3,7 +3,6 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import sharebookAxiosClient from '@sharebook-axios';
 import SendIcon from '@mui/icons-material/Send';
 import Utils from '@sharebook-utils';
-import axios, { AxiosError, AxiosResponse } from 'axios';
 import Link from 'next/link';
 import React, { useCallback, useState } from 'react';
 
@@ -39,14 +38,14 @@ export default function Form() {
 			setLoadingRequest(true);
 			sharebookAxiosClient
 				.post('Account/ForgotMyPassword', { email })
-				.then((resp: AxiosResponse) => {
+				.then((resp: any) => {
 					const newRequestResponse: IResponseRequest | null = (resp.data as IResponseRequest) || null;
-					console.log(resp, newRequestResponse);
+					console.log('then', resp, newRequestResponse);
 					if (newRequestResponse) setRequestResponse(newRequestResponse);
 					else setRequestResponse(defaultRequestResponseSuccess);
 				})
-				.catch((err: Error | AxiosError) => {
-					if (axios.isAxiosError(err)) {
+				.catch((err: Error | any) => {
+					if (sharebookAxiosClient.isAxiosError(err)) {
 						const resp: IResponseRequest | null = err?.response?.data || null;
 						if (resp) setRequestResponse(resp);
 						else setRequestResponse(defaultRequestResponseError);

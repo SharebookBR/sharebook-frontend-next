@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Button, Grid, TextField, Typography, useMediaQuery, useTheme, styled } from '@mui/material';
+import { Button, Grid, TextField, Typography, useMediaQuery, useTheme, styled, Box } from '@mui/material';
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import Utils from '@sharebook-utils';
@@ -90,7 +90,16 @@ const Login: NextPage = () => {
 
 				<Grid item xs={5} className={styles.right}>
 					<Typography>Boas vindas</Typography>
-					<Typography variant="h4" className={styles.title}>
+					<Typography
+						variant="h4"
+						sx={{
+							fontSize: {
+								xs: 28,
+								sm: 38
+							}
+						}}
+						className={styles.title}
+					>
 						Faça login na Sharebook
 					</Typography>
 					<TextField
@@ -122,6 +131,11 @@ const Login: NextPage = () => {
 						onBlur={validatePassword}
 						onChange={(e) => handlePassword(e.currentTarget.value)}
 					/>
+					<Box mt={2} mb={1} display="flex" justifyContent="flex-end" data-testid="box-link-reset-password">
+						<Link href="/reset-password" passHref>
+							Esqueci minha senha
+						</Link>
+					</Box>
 					<Button
 						data-testid="button-login"
 						disabled={Boolean(emailError || passwordError || email.length === 0 || password.length === 0)}

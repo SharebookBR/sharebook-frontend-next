@@ -23,6 +23,13 @@ describe('LoginPage ', () => {
 	it('Button Login rendered', () => {
 		TestMuiButton({ disabled: true, dataTestId: 'button-login' });
 	});
+	it('Link to reset-password page rendered', () => {
+		const buttonLoginEl: HTMLDivElement = screen.getByTestId('box-link-reset-password') as HTMLDivElement;
+		expect(buttonLoginEl).toBeInTheDocument();
+		const anchorEl: HTMLAnchorElement = buttonLoginEl.firstElementChild as HTMLAnchorElement;
+		expect(anchorEl).toBeInTheDocument();
+		expect(anchorEl.href).toContain('/reset-password');
+	});
 	it('fields and button are working together', async () => {
 		// 3. Login -> Should exists HTMLButtonElement by testId: "button-login" and it`s disabled
 		const buttonLoginEl = screen.getByTestId('button-login') as HTMLButtonElement;

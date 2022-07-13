@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-const ApiUrl = process.env.NEXT_PUBLIC_SHAREBOOK_API ?? 'https://dev.sharebook.com.br/api/';
+const AngularUrl = process.env.NEXT_PUBLIC_SHAREBOOK_ANGULAR ?? 'https://www.angular.sharebook.com.br/';
 
 const nextConfig = {
 	reactStrictMode: true,
@@ -9,7 +9,7 @@ const nextConfig = {
 		return [
 			{
 				source: '/:path*',
-				destination: `${ApiUrl.replace('/api', '')}:path*`
+				destination: `${AngularUrl}:path*`
 			}
 		];
 	}

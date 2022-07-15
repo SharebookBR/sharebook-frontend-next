@@ -14,6 +14,10 @@ export default function SharebookNavBarItem({ path, children }: SharebookNavBarI
 				justifyContent: {
 					sm: 'center',
 					xs: 'center'
+				},
+				p: {
+					md: '0 0.6rem',
+					lg: '0 1.18rem'
 				}
 			}}
 		>

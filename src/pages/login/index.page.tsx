@@ -26,12 +26,12 @@ const Login: NextPage = () => {
 	const [emailError, setEmailError] = useState('');
 	const [passwordError, setPasswordError] = useState('');
 	const [loginError, setLoginError] = useState(false);
-	const { authContext, login } = useAuthContext();
+	const { authenticated, login } = useAuthContext();
 
 	const theme = useTheme();
 	const lgMatch = useMediaQuery(theme.breakpoints.down('lg'));
 
-	if (authContext.authenticated) window.location.href = window.location.origin; //go to home
+	if (authenticated) window.location.href = window.location.origin; //go to home
 
 	const validateEmail = useCallback(() => {
 		if (email.length > 0 && !Utils.EmailIsValid(email)) setEmailError('Email inválido');

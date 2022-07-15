@@ -12,14 +12,18 @@ export function SharebookNavBar() {
 	const { authContext, logout } = useAuthContext();
 
 	const theme = useTheme();
-	const mdMatch = useMediaQuery(theme.breakpoints.down('md'));
+	const mdMatch: boolean = useMediaQuery(theme.breakpoints.down('md'));
 
 	const MenuItems = () => {
 		return (
 			<>
 				<SharebookNavBarItemText text="Início" path="/" />
 				<SharebookNavBarItem path="/livros/doar">
-					<Button className={styles.donateButton} variant="contained" onClick={() => console.log('x')}>
+					<Button
+						className={styles.donateButton}
+						variant="contained"
+						sx={{ minWidth: '150px', '& img': { pl: { xs: '4px !important', lg: '8px !important' } } }}
+					>
 						Doar um livro
 						<Image src="/mini-book.png" width={35} height={18} alt="Doar um livro" />
 					</Button>
@@ -50,10 +54,19 @@ export function SharebookNavBar() {
 		);
 
 	return (
-		<AppBar sx={{ padding: '15px 10vw' }} position="sticky" color="default">
-			<Toolbar>
+		<AppBar
+			sx={{
+				padding: {
+					md: '15px 6vw',
+					lg: '15px 10vw'
+				}
+			}}
+			position="sticky"
+			color="default"
+		>
+			<Toolbar sx={{ lg: '0' }}>
 				<SharebookNavBarLogo />
-				<List className={styles.list}>
+				<List sx={{ ml: '8px' }} className={styles.list}>
 					<MenuItems />
 				</List>
 			</Toolbar>

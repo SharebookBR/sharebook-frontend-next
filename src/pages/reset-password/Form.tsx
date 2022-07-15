@@ -80,7 +80,17 @@ export default function Form() {
 			}}
 			ml={1}
 		>
-			<Typography variant="h4">Não se preocupe!</Typography>
+			<Typography
+				variant="h4"
+				sx={{
+					fontSize: {
+						xs: '28px',
+						sm: '38px'
+					}
+				}}
+			>
+				Não se preocupe!
+			</Typography>
 			<Typography variant="bodyMedium" maxWidth={370} mt={1} mb={2}>
 				Enviaremos um e-mail com instruções de como redefinir sua senha.
 			</Typography>

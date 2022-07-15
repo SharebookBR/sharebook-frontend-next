@@ -7,7 +7,7 @@ import Topic from './Topic';
 export default function TermsOfUse() {
 	return (
 		<Container style={{ maxWidth: '1110px', paddingBottom: '32px' }}>
-			<Typography variant="h3" component="h1" textAlign="center" mt={1}>
+			<Typography sx={{ fontSize: { xs: '43px', sm: '50px' } }} variant="h3" component="h1" textAlign="center" mt={1}>
 				Termos de uso
 			</Typography>
 

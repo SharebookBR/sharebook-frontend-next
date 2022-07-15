@@ -16,7 +16,18 @@ export default function ResetPassword() {
 					}
 				}}
 			>
-				<Typography variant="h4" color="primary" mt={4} mb={4}>
+				<Typography
+					variant="h4"
+					sx={{
+						fontSize: {
+							xs: '28px',
+							sm: '38px'
+						}
+					}}
+					color="primary"
+					mt={4}
+					mb={4}
+				>
 					Esqueceu sua senha ?
 				</Typography>
 			</Box>

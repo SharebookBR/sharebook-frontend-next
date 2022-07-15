@@ -37,7 +37,7 @@ export function SharebookNavBar() {
 						<ListItem>
 							<Typography variant="bodyMediumBold">{authContext.name}</Typography>
 						</ListItem>
-						<Button onClick={() => logout()}>Logout</Button>
+						<Button onClick={() => logout()}>Sair</Button>
 					</>
 				) : (
 					<SharebookNavBarItemText text="Login" path="/login" />

@@ -22,7 +22,7 @@ export function SharebookNavBar() {
 					<Button
 						className={styles.donateButton}
 						variant="contained"
-						sx={{ minWidth: '150px', '& img': { pl: { xs: '4px !important', lg: '8px !important' } } }}
+						sx={{ minWidth: '150px', '& img': { pl: { xs: '4px !important', xl: '8px !important' } } }}
 					>
 						Doar um livro
 						<Image src="/mini-book.png" width={35} height={18} alt="Doar um livro" />

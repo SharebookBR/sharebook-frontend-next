@@ -26,7 +26,7 @@ export function DefaultLayout({ children }: DefaultLayoutProps) {
 			</Head>
 			<SharebookNavBar />
 			{children}
-			{consent || <CookieConsent />}
+			{!consent && <CookieConsent />}
 			<SharebookFooter />
 		</>
 	);

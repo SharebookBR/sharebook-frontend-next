@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import type { NextPage } from 'next';
-import { Box, Button, Checkbox, FormControlLabel, FormGroup, Grid, TextField, Typography, Link as LinkMui } from '@mui/material';
+import { Box, Button, Grid, TextField, Typography, useMediaQuery, useTheme } from '@mui/material';
 
 import styles from './styles.module.scss';
 import Image from 'next/image';
@@ -10,11 +10,11 @@ import { initialValues, initialErrors } from './defaultValues';
 import Utils from '@sharebook-utils';
 import configs from '@sharebook-configs';
 import axios from 'axios';
-import LabelCheck from './LabelCheck';
 import sharebookAxiosClient from '@sharebook-axios';
 import { MaskedInputPhone, MaskedInputPostalCode } from '@sharebook-components';
 import { ModalParentEmail } from './ModalParentEmail';
 import { RegisterSuccess } from './RegisterSuccess';
+import Accepts from './Accepts';
 
 const Register: NextPage = () => {
 	const [loadingRegister, setLoadingRegister] = useState(false);
@@ -24,6 +24,9 @@ const Register: NextPage = () => {
 	const [registerErrors, setRegisterErrors] = useState<string[]>([]);
 	const [registerSuccess, setRegisterSuccess] = useState(false);
 	const [showModalParentEmail, setShowModalParentEmail] = useState(false);
+
+	const theme = useTheme();
+	const mdMatch: boolean = useMediaQuery(theme.breakpoints.down('md'));
 
 	const ageIsEqualsOrBiggerThan12 = useCallback((): boolean => Utils.AgeIsEqualsOrBiggerThanX(12, values.age || 0), [values.age]);
 	const showTextParentEmail = Boolean(Boolean(values.parentEmail) || (Boolean(values.age && values.age > 7) && !ageIsEqualsOrBiggerThan12()));
@@ -347,34 +350,13 @@ const Register: NextPage = () => {
 							onBlur={(e) => validatePasswords(e as React.ChangeEvent<HTMLInputElement>)}
 							onChange={onChange}
 						/>
-
-						<FormGroup className={styles.acceptLabels}>
-							<FormControlLabel
-								sx={{ mt: 4 }}
-								control={
-									<Checkbox name="allowSendingEmail" defaultChecked onChange={onChangeCheck} value={values.allowSendingEmail} />
-								}
-								label={<LabelCheck label="Aceito receber e-mails e newsletter da Sharebook" />}
+						{!mdMatch && (
+							<Accepts
+								onChangeCheck={onChangeCheck}
+								acceptTermOfUse={values.acceptTermOfUse}
+								allowSendingEmail={values.allowSendingEmail}
 							/>
-							<FormControlLabel
-								sx={{ mt: 4 }}
-								data-testid="input-acceptTermOfUse"
-								control={<Checkbox name="acceptTermOfUse" onChange={onChangeCheck} value={values.acceptTermOfUse} />}
-								label={
-									<LabelCheck
-										label={
-											<Typography>
-												Eu concordo com os{' '}
-												<LinkMui href="/terms-of-use" target="_blank">
-													Termos de uso
-												</LinkMui>{' '}
-												da Sharebook
-											</Typography>
-										}
-									/>
-								}
-							/>
-						</FormGroup>
+						)}
 					</Grid>
 
 					<Grid item xs={12} md={6} className={styles.rightForm}>
@@ -468,6 +450,14 @@ const Register: NextPage = () => {
 							required
 							onChange={onChange}
 						/>
+
+						{mdMatch && (
+							<Accepts
+								onChangeCheck={onChangeCheck}
+								acceptTermOfUse={values.acceptTermOfUse}
+								allowSendingEmail={values.allowSendingEmail}
+							/>
+						)}
 
 						<Button
 							data-testid="button-register"

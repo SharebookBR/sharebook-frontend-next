@@ -222,7 +222,17 @@ const Register: NextPage = () => {
 	if (registerSuccess) return <RegisterSuccess />;
 
 	return (
-		<Grid container className={styles.container}>
+		<Grid
+			container
+			sx={{
+				padding: {
+					xs: '2rem 9vw',
+					md: '5rem 9vw',
+					lg: '5rem 11vw'
+				}
+			}}
+			className={styles.container}
+		>
 			<Grid item sx={{ display: { sm: 'none', xs: 'none', md: 'initial' } }} md={2} className={styles.left}>
 				<Image src="/register.png" width={192} height={552} alt="Crie sua conta na Sharebook" />
 			</Grid>

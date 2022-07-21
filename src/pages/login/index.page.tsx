@@ -7,6 +7,7 @@ import Utils from '@sharebook-utils';
 import styles from './styles.module.scss';
 import { useAuthContext } from '@sharebook-hooks';
 import Link from 'next/link';
+import { LoadingButton } from '@mui/lab';
 
 /*
 	TODO
@@ -21,10 +22,11 @@ const GridWrapper = styled(Grid)(() => ({
 }));
 
 const Login: NextPage = () => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [emailError, setEmailError] = useState('');
-	const [passwordError, setPasswordError] = useState('');
+	const [email, setEmail] = useState<string>('');
+	const [password, setPassword] = useState<string>('');
+	const [emailError, setEmailError] = useState<string>('');
+	const [passwordError, setPasswordError] = useState<string>('');
+	const [loading, setLoading] = useState<boolean>(false);
 	const [loginError, setLoginError] = useState(false);
 	const { authenticated, login } = useAuthContext();
 
@@ -61,7 +63,9 @@ const Login: NextPage = () => {
 	);
 
 	const handleLogin = useCallback(async () => {
+		setLoading(true);
 		const loginIsOk = await login({ email, password });
+		setLoading(false);
 		if (!loginIsOk) setLoginError(true);
 	}, [email, password, login]);
 
@@ -136,7 +140,8 @@ const Login: NextPage = () => {
 							Esqueci minha senha
 						</Link>
 					</Box>
-					<Button
+					<LoadingButton
+						loading={loading}
 						data-testid="button-login"
 						disabled={Boolean(emailError || passwordError || email.length === 0 || password.length === 0)}
 						onClick={handleLogin}
@@ -144,8 +149,8 @@ const Login: NextPage = () => {
 						variant="contained"
 						className={styles.loginButton}
 					>
-						Entrar
-					</Button>
+						{loading ? '' : 'Entrar'}
+					</LoadingButton>
 					{loginError && (
 						<Typography className={styles.loginError} color="error">
 							Login e/ou senha inválidos! Verifique seus dados e tente novamente.

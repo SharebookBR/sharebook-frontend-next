@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import axiosClient from '@sharebook-axios';
+import { useIsMounted } from 'usehooks-ts';
 
 interface IAuthContext {
 	authenticated: boolean;
@@ -30,6 +31,7 @@ const keyLocalStorage = 'shareBookUser';
 
 export function useAuthContext() {
 	const [authContext, setAuthContext] = useState<IAuthContext>(initialValue);
+	const isMounted: () => boolean = useIsMounted();
 
 	const login = useCallback(
 		async (data: ILogin): Promise<boolean> => {
@@ -54,13 +56,17 @@ export function useAuthContext() {
 		setAuthContext(initialValue);
 	}, []);
 
-	useEffect(() => {
+	const verifyAuthFromLocalStorage = useCallback(() => {
 		const strValue = localStorage.getItem(keyLocalStorage);
 		if (strValue) {
 			const shareBookUser: IAuthContext = JSON.parse(strValue || '');
-			if (shareBookUser != authContext) setAuthContext(shareBookUser);
+			setAuthContext(shareBookUser);
 		}
 	}, []);
+
+	useEffect(() => {
+		if (isMounted()) verifyAuthFromLocalStorage();
+	}, [isMounted, verifyAuthFromLocalStorage]);
 
 	return { authenticated: authContext.authenticated, authContext, login, logout };
 }

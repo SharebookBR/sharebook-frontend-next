@@ -190,6 +190,9 @@ const theme = createTheme({
 					}
 				}
 			}
+		},
+		MuiAlert: {
+			variants: [{ props: { variant: 'filled' }, style: { color: '#fff' } }]
 		}
 	}
 });

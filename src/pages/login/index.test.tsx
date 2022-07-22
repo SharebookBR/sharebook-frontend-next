@@ -14,10 +14,10 @@ describe('LoginPage ', () => {
 			render(<LoginPage />);
 		});
 	});
-	it('TestField Email rendered', () => {
+	it('TextField Email rendered', () => {
 		TestMuiTextField({ required: true, dataTestId: 'input-email', type: 'email' });
 	});
-	it('TestField Password rendered', () => {
+	it('TextField Password rendered', () => {
 		TestMuiTextField({ required: true, dataTestId: 'input-password', type: 'password' });
 	});
 	it('Button Login rendered', () => {

@@ -141,6 +141,7 @@ export default function ContactUs() {
 					}}
 				>
 					<TextField
+						data-testid="input-name"
 						required
 						sx={{ mt: 3, width: '310px' }}
 						label="Nome"
@@ -154,9 +155,11 @@ export default function ContactUs() {
 					/>
 
 					<TextField
+						data-testid="input-email"
 						required
 						sx={{ mt: 3, width: '310px' }}
 						label="E-mail"
+						type="email"
 						variant="outlined"
 						value={values.email}
 						error={Boolean(errors.email)}
@@ -167,6 +170,7 @@ export default function ContactUs() {
 					/>
 
 					<TextField
+						data-testid="input-phone"
 						required
 						sx={{ mt: 3, width: '310px' }}
 						label="DDD + Telefone"
@@ -186,6 +190,7 @@ export default function ContactUs() {
 					/>
 
 					<TextField
+						data-testid="input-message"
 						required
 						sx={{ mt: 3, mb: 3, width: '310px' }}
 						label="Mensagem"
@@ -209,6 +214,7 @@ export default function ContactUs() {
 					/>
 
 					<LoadingButton
+						data-testid="loadingbutton-send"
 						sx={{ mt: 3, minWidth: '90px' }}
 						loading={loadingSubmit}
 						variant="contained"

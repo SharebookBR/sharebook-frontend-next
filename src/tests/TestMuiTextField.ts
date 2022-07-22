@@ -5,6 +5,7 @@ interface IGetTextFieldByMuiProps {
 	required: boolean;
 	dataTestId: string;
 	type: string;
+	multiline?: boolean;
 }
 
 /*
@@ -16,22 +17,37 @@ interface IGetTextFieldByMuiProps {
     </div>
 */
 
-export const TestMuiTextField = ({ dataTestId, required, type }: IGetTextFieldByMuiProps) => {
+export const TestMuiTextField = ({ dataTestId, required, type, multiline = false }: IGetTextFieldByMuiProps) => {
 	const textFieldWrapperEl = screen.getByTestId(dataTestId) as HTMLDivElement;
 	expect(textFieldWrapperEl).toBeInTheDocument();
 	expect(textFieldWrapperEl.childElementCount).toBe(2);
 
 	const childDivEl = textFieldWrapperEl.lastElementChild as HTMLDivElement;
 	expect(childDivEl).toBeInTheDocument();
-	expect(childDivEl.childElementCount).toBe(2);
+	if (multiline) {
+		//textarea
+		expect(childDivEl.childElementCount).toBe(3);
+		const textareaEl = childDivEl?.firstElementChild as HTMLTextAreaElement;
+		expect(textareaEl).toBeInTheDocument();
 
-	const inputEl = childDivEl?.firstElementChild as HTMLInputElement;
-	expect(inputEl).toBeInTheDocument();
+		if (required) {
+			expect(textareaEl.required).toBeTruthy();
+		}
 
-	if (required) {
-		expect(inputEl.required).toBeTruthy();
+		expect(textareaEl.childElementCount).toBe(0);
+		// expect(textareaEl.type).toBe(type); //Textfield don't have the type attribute on DOM
+	} else {
+		//input
+		expect(childDivEl.childElementCount).toBe(2);
+
+		const inputEl = childDivEl?.firstElementChild as HTMLInputElement;
+		expect(inputEl).toBeInTheDocument();
+
+		if (required) {
+			expect(inputEl.required).toBeTruthy();
+		}
+
+		expect(inputEl.childElementCount).toBe(0);
+		expect(inputEl.type).toBe(type);
 	}
-
-	expect(inputEl.childElementCount).toBe(0);
-	expect(inputEl.type).toBe(type);
 };

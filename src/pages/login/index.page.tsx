@@ -31,12 +31,12 @@ const Login: NextPage = () => {
 	const [loginError, setLoginError] = useState(false);
 	const [returnUrl, setReturnUrl] = useState<string>('');
 	const { authenticated, login } = useAuthContext();
-	const { query } = useRouter();
+	const router = useRouter();
 
 	useEffect(() => {
-		const newReturnUrl: string = query?.returnUrl?.toString() || '';
+		const newReturnUrl: string = router?.query?.returnUrl?.toString() || '';
 		if (Boolean(newReturnUrl.length > 0)) setReturnUrl(newReturnUrl);
-	}, [query]);
+	}, [router]);
 
 	const theme = useTheme();
 	const lgMatch = useMediaQuery(theme.breakpoints.down('lg'));

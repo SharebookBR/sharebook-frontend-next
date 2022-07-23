@@ -1,8 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { Button, Grid, TextField, Typography, useMediaQuery, useTheme, styled, Box } from '@mui/material';
 import type { NextPage } from 'next';
 import Image from 'next/image';
 import Utils from '@sharebook-utils';
+import { useRouter } from 'next/router';
 
 import styles from './styles.module.scss';
 import { useAuthContext } from '@sharebook-hooks';
@@ -28,12 +29,19 @@ const Login: NextPage = () => {
 	const [passwordError, setPasswordError] = useState<string>('');
 	const [loading, setLoading] = useState<boolean>(false);
 	const [loginError, setLoginError] = useState(false);
+	const [returnUrl, setReturnUrl] = useState<string>('');
 	const { authenticated, login } = useAuthContext();
+	const router = useRouter();
+
+	useEffect(() => {
+		const newReturnUrl: string = router?.query?.returnUrl?.toString() || '';
+		if (Boolean(newReturnUrl.length > 0)) setReturnUrl(newReturnUrl);
+	}, [router]);
 
 	const theme = useTheme();
 	const lgMatch = useMediaQuery(theme.breakpoints.down('lg'));
 
-	if (authenticated) window.location.href = window.location.origin; //go to home
+	if (authenticated) window.location.href = `${window.location.origin}/${returnUrl}`;
 
 	const validateEmail = useCallback(() => {
 		if (email.length > 0 && !Utils.EmailIsValid(email)) setEmailError('Email inválido');

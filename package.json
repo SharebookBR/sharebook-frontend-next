@@ -5,6 +5,7 @@
 	"scripts": {
 		"dev": "next dev",
 		"dev-docker-linux": "docker-compose -f docker-compose.dev.linux.yml",
+		"dev-docker-windows": "docker-compose -f docker-compose.dev.windows.yml",
 		"build": "next build",
 		"build-start": "next build && next start",
 		"start": "next start",

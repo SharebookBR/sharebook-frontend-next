@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+    sharebook-front-next:
+        container_name: sharebook-front-next
+        image: henriqueholtz/node-win:16.17.0
+        command: cmd /c "npm -v & node -v & npm run dev"
+        ports:
+            - '3000:3000'
+        volumes:
+            - ".:C:\\app\\"

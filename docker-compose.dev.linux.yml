@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-    sharebook-front:
-        container_name: sharebook-front
+    sharebook-front-next:
+        container_name: sharebook-front-next
         ports:
             - '3000:3000'
         build:
